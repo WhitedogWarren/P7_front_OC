@@ -1,0 +1,7 @@
+<!--
+    <p>posts-viewer works!</p>
+    <button (click)="showPosts()">test</button>
+
+    <p *ngFor="let post of postsData">{{post.author}}</p>
+-->
+<app-single-post *ngFor="let post of postsData" [post]="post"></app-single-post>

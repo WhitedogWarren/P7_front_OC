@@ -1,0 +1,23 @@
+<!-- Avant réception des données ( loader )-->
+<p *ngIf="loading">Veuillez patienter</p>
+<!-- Une fois les données reçues -->
+<div *ngIf="!loading">
+    <h2>{{this.viewedUser.lastname}} {{this.viewedUser.firstname}}</h2>
+    <div class="profile-viewer__avatar-container">
+        <img class="profile-viewer__avatar" src="http://localhost:3000/images/avatars/{{this.viewedUser.avatar}}" alt="avatar"/>
+       
+    </div>
+    <div class="profile-viewer__bio">
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            Illo, repudiandae sit veniam numquam aliquid cumque consectetur placeat
+             nisi vel nulla cum commodi sint deleniti laboriosam delectus enim facere
+             a maiores.
+             
+       
+        </p>
+    </div>
+    
+</div>
+
+
+

@@ -1,0 +1,13 @@
+<div class="post-container">
+    <a routerLink="../users/{{post.User.id}}" routerLinkActive="active">
+        <div class="post-label">
+            <div class="post-label__img-container">
+                <img src="http://localhost:3000/images/avatars/{{post.User.avatarUrl}}" alt="avatar" />
+            </div>
+            <span>{{post.User.lastname}} {{post.User.firstname}} a dit :</span>
+        </div>
+    </a>
+    
+    <p class="post-text-content">{{post.content}}</p>
+</div>
+

@@ -1,0 +1,48 @@
+:host {
+    display: flex;
+    justify-content: space-between;
+    height: 200px;
+    background-color: #091f43;
+    padding: 10px;
+}
+
+.header-branding {
+    display:flex;
+}
+
+.header__logo {
+    height: 100%;
+}
+
+
+h1 {
+    color: #ffd7d7;
+    height: fit-content;
+    align-self: center;
+    font-size: 60px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    & p, & a {
+        margin: 20px;
+        color: #ffd7d7;
+    }
+    & .header-avatar-container {
+        border-radius: 25px;
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+    }
+    & .header-avatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: none;
+    }
+}
+

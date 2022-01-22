@@ -1,0 +1,15 @@
+form {
+    width: 60%;
+    margin: auto;
+    background-color: aliceblue;
+    text-align: center;
+}
+
+textarea {
+    width: 98%;
+    height: 4em;
+    resize: none;
+    &:focus {
+        height: 10em;
+    }
+}

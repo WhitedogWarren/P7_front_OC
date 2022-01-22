@@ -1,0 +1,8 @@
+<form [formGroup]="postMakerForm" (ngSubmit)="onSubmit()">
+    <p>Postez un nouveau contenu</p>
+    <div>
+        <textarea formControlName="postedContent"></textarea>
+    </div>
+    
+    <button type="submit" >Poster</button>
+</form>

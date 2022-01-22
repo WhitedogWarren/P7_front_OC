@@ -1,0 +1,39 @@
+h2 {
+    text-align: center;
+}
+
+.name-fieldset {
+    display: flex;
+    border: none;
+    width:fit-content;
+    margin:auto;
+}
+
+.avatar-fieldset {
+    border:none;
+    width: fit-content;
+    margin:auto;
+    & .avatar-viewer {
+        width: 400px;
+        height: 400px;
+        overflow: hidden;
+        & img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+.profile-update__labels {
+    padding: 0 20px;
+    line-height: 1.6em;
+}
+
+.profile-update__inputs {
+    & input {
+        margin-bottom: 6px;
+        margin-left: 10px;
+    }
+}
+

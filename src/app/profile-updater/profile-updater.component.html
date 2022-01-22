@@ -1,0 +1,35 @@
+<h2>Votre profil</h2>
+    
+
+<form [formGroup]="updateProfileForm" (ngSubmit)="onSubmit()">
+    <fieldset class="name-fieldset">
+        <div class="profile-update__labels">
+            <label for="posted-lastname">Nom</label><br/>
+            <label for="posted-firstName">Prénom</label>
+        </div>
+        <div class="profile-update__inputs">
+            <input type="Text" id="posted-lastName" formControlName="postedLastName" value="{{this.user.userLastName}}"/><br/>
+            <input type="Text" id="posted-firstName" formControlName="postedFirstName" value="{{this.user.userFirstName}}"/>
+        </div>
+    </fieldset>
+    <fieldset class="avatar-fieldset">
+        <label for="postedAvatar">Avatar</label><br/>
+        <div class="avatar-viewer">
+            <img src="http://localhost:3000/images/avatars/{{this.user.userAvatar}}">
+        </div>
+        
+        <input 
+            type="file"
+            id="avatarInput"
+            enctype="multipart/form-data"
+            formControlName="avatarInput"
+            (change)="avatarHandler($event)"
+            
+        />
+    </fieldset>
+    
+    <button type="submit" [disabled]="!updateProfileForm.valid">submit</button>
+    
+    
+    
+</form>

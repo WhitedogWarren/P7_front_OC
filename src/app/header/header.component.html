@@ -1,0 +1,26 @@
+<div class="header-branding">
+    <img src="../../assets/images/logos/icon_300.png" alt="logo groupomania" class="header__logo">
+    <h1>Groupomania</h1>
+</div>
+    
+<nav>
+    <div>
+        <a *ngIf="isLoggedIn" routerLink="users/{{this.user.userId}}" routerLinkActive="active">
+            <div class="header-avatar-container">
+                <img class="header-avatar" src="http://localhost:3000/images/avatars/{{this.user.userAvatar}}" alt="mon avatar" />
+            
+            </div>
+            {{userLastName}} {{userFirstName}}
+        </a>
+        <a *ngIf="isLoggedIn" href (click)="logout()">LogOut</a><br/>
+        
+        <a *ngIf="!isLoggedIn" routerLink="login" routerLinkActive="active">login</a>
+        <a *ngIf="!isLoggedIn" routerLink="signup" routerLinkActive="active">signup</a>
+    </div>
+        
+    <div>
+        <a *ngIf="isLoggedIn"  routerLink="users" routerLinkActive="active">Utilisateurs</a>
+        <a *ngIf="isLoggedIn" routerLink="homepage" routerLinkActive="active">Accueil</a>
+    </div>
+    
+</nav>
