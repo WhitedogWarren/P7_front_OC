@@ -1,13 +1,150 @@
-<div class="post-container">
-    <a routerLink="../users/{{post.User.id}}" routerLinkActive="active">
-        <div class="post-label">
-            <div class="post-label__img-container">
-                <img src="http://localhost:3000/images/avatars/{{post.User.avatarUrl}}" alt="avatar" />
+<div *ngIf="showPost()">
+    <div *ngIf="!this.editMode" class="post-container" [ngClass]="{'moderated-post': post.moderated, 'normal-post': !post.moderated}">
+        
+            <div class="post-heading">
+                <a routerLink="../users/{{post.User.id}}" routerLinkActive="active">
+                    <div class="post-label">
+                        <div class="post-label__img-container">
+                            <img src="http://localhost:3000/images/avatars/{{post.User.avatarUrl}}" alt="avatar" />
+                        </div>
+                        <div>{{post.User.lastname}} {{post.User.firstname}} a dit :</div>
+                        
+                    </div>
+                </a>
+                <div *ngIf="this.userId==post.User.id">
+                    <img class="post-edit-icons" src="../../assets/images/boutons/pen.png" alt="éditer le post" title="éditer le post" (click)="editPost()">
+                    <img class="post-edit-icons" src="../../assets/images/boutons/trash.png" alt="supprimer le post" title="supprimer le post" (click)="deletePost()">
+                </div>
             </div>
-            <span>{{post.User.lastname}} {{post.User.firstname}} a dit :</span>
+            
+        
+        
+        <p class="post-text-content"><img *ngIf="this.post.imageUrl" class="post-image" src="http://localhost:3000/images/postImage/{{post.imageUrl}}" alt="image du post"/>
+            <span>{{post.content}}</span>
+        </p>
+        <div class="reaction-panel" *ngIf="userId !== post.User.id" >
+            <div class="reaction-box">
+                <div class="reaction-box__label">Réactions :</div>
+                <div class="reaction-box__buttons">
+                    <div>
+                        <img src="../../assets/images/boutons/like.png" alt="liker le post" title="J'aime" (click)="likePost()"/><br/>
+                        <span *ngIf="liked.length > 0">{{liked.length}}</span>
+                    </div>
+                    <div>
+                        <img src="../../assets/images/boutons/love.png" alt="adorer le post" title="J'adore" (click)="lovePost()"/><br/>
+                        <span *ngIf="loved.length > 0">{{loved.length}}</span>
+                    </div>
+                    <div>
+                        <img src="../../assets/images/boutons/laugh.png" alt="adorer le post" title="&Ccedil;a me fait rire" (click)="laughPost()"/><br/>
+                        <span *ngIf="laughed.length > 0">{{laughed.length}}</span>
+                    </div>
+                    <div>
+                        <img src="../../assets/images/boutons/anger.png" alt="adorer le post" title="&Ccedil;a me met en colère" (click)="angerPost()"/><br/>
+                        <span *ngIf="angered.length > 0">{{angered.length}}</span>
+                    </div>
+                </div>
+                
+
+            </div>
+            <div class="report-box">
+                <span *ngIf="post.reported.length > 0">Ce post a été signalé {{post.reported.length}} fois</span>
+                <div *ngIf="!post.reported.includes(userId) && post.User.role == 'user' && user.userRole == 'user'" class="report-button" title="Signaler le post" (click)="reportPost()">
+                    <img src="../../assets/images/boutons/warning.png" alt="Signaler le post" />
+                    Signaler
+                </div>
+                <div *ngIf="post.reported.includes(userId) || (user.userRole !== 'user' && post.reported.length > 0)">
+                    <div class="unreport-button" title="annuler le signalement" (click)="unreportPost()">
+                        <img src="../../assets/images/boutons/croix.png" alt="annuler le signalement" />
+                        Annuler le signalement
+                        
+                    </div>
+                </div>
+            </div>
         </div>
-    </a>
-    
-    <p class="post-text-content">{{post.content}}</p>
+        <div class="moderation-box">
+            <div class="moderation-infos" *ngIf="post.moderated && (this.user.userRole == 'moderator' || this.user.userRole == 'admin' || this.userId == post.User.id)">
+                <span>Ce post a été modéré pour la raison suivante :</span>
+                
+                <p class="moderation-reason">"{{post.reasonForModeration}}"</p>
+            </div>
+            <div class="submit-correction">
+                <div *ngIf="this.userId == post.User.id && post.moderated && !post.corrected" class="submit-correction-button" title="signaler comme corrigé" (click)="sendCorrection()">
+                    <img src="../../assets/images/boutons/send_pink.png" alt="signaler comme corrigé" />
+                    Signaler comme corrigé
+                </div>
+                <div *ngIf="this.userId == post.User.id && post.moderated && post.corrected" class="submit-correction-abort-button" title="annule la notification de message corrigé" (click)="avoidCorrection()">
+                    <img src="../../assets/images/boutons/croix_pink.png" alt="signaler comme non corrigé" />
+                    signaler comme non corrigé
+                </div>
+            </div>
+            
+            <div class="moderation-toolbar" *ngIf="(this.user.userRole == 'moderator' || this.user.userRole == 'admin') && this.userId !== post.User.id">
+                
+                <div *ngIf="!post.moderated">
+                    <div *ngIf="!this.moderateMode" class="moderation-button" (click)="activateModerationForm()" title="modérer le post">
+                        <img src="../../assets/images/boutons/warning_pink.png" alt="modérer le post" />
+                        modérer
+                        
+                    </div>
+                    <div *ngIf="this.moderateMode" class="moderation-form">
+                        <span>
+                            raison de la modération :
+                        </span>
+                        
+                        <form [formGroup]="postmoderationForm">
+                            <textarea formControlName="reasonForModeration" class="moderation-reason-input"></textarea>
+                        </form>
+                        <div class="moderation-form-buttons">
+                            <div class="cancel-moderation" (click)="deactivateModerationForm()" title="annuler l'édition"><img src="../../assets/images/boutons/croix.png" alt="annuler l'édition" />annuler</div>
+                            <div class="submit-moderation" (click)="moderatePost()" title="confirmer l'édition"><img src="../../assets/images/boutons/send_pink.png" alt="confirmer l'édition" />valider</div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div *ngIf="post.moderated">
+                    <div class="submit-unmoderation" (click)="unmoderatePost()"><img src="../../assets/images/boutons/croix_pink.png" alt="annuler l'édition" />Enlever la modération</div>
+                </div>
+            </div>
+        </div>
+            
+
+    </div>
+
+    <form *ngIf="this.editMode" class="post-editor" [formGroup]="postEditForm">
+        <div class="post-editor-heading">
+            <img class="post-editor__cancel" src="../../assets/images/boutons/croix.png" alt="annuler l'édition" title="annuler l'édition" (click)="cancelEdition()" />
+        </div>
+        <!-- post has an image -->
+        <div *ngIf="this.post.imageUrl" class="image-editor">
+            <div>
+                <img class="image-editor__thumb" src="http://localhost:3000/images/postImage/{{post.imageUrl}}" alt="image du post"/>
+            </div>
+            <div class="image-editor__buttons-box">
+                <img class="image-editor__replace" src="../../assets/images/boutons/replace.png" alt="remplacer l'image" title="remplacer l'image" (click)="fileUpload.click()"/><br>
+                <img class="image-editor__delete" src="../../assets/images/boutons/trash.png" alt="supprimer l'image" title="supprimer l'image" (click)="onDeleteImage()" />
+
+            </div>
+        </div>
+
+        <!-- post don't have an image -->
+        <div *ngIf="!this.post.imageUrl" class="image-adding">
+            <div>
+                <img class="image-adding__thumb" src="../../assets/images/boutons/picture.png" alt="ajouter une image" title="ajouter une image" (click)="fileUpload.click()" />
+            </div>
+        </div>
+
+        <textarea formControlName="editedContent" class="content-editor" >{{post.content}}</textarea>
+        <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+        <div class="post-editor__submit" (click)="onSubmit()" >
+            <div>
+                <img src="../../assets/images/boutons/send.png" alt="confirmer l'édition" title="confirmer l'édition" />
+            </div>
+            <div>
+                <span>envoyer</span>
+            </div>
+        </div>
+
+    </form>
 </div>
+
 

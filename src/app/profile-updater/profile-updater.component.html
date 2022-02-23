@@ -15,7 +15,7 @@
     <fieldset class="avatar-fieldset">
         <label for="postedAvatar">Avatar</label><br/>
         <div class="avatar-viewer">
-            <img src="http://localhost:3000/images/avatars/{{this.user.userAvatar}}">
+            <img class="avatar-image" src="http://localhost:3000/images/avatars/{{this.user.userAvatar}}">
         </div>
         
         <input 
@@ -27,9 +27,30 @@
             
         />
     </fieldset>
+    <fieldset class="bio-fieldset">
+        <h3>À propos de vous :</h3>
+        <textarea class="bio-input" formControlName="bioInput">
+            
+        </textarea>
+    </fieldset>
     
-    <button type="submit" [disabled]="!updateProfileForm.valid">submit</button>
+    <!--
+        <button type="submit" [disabled]="!updateProfileForm.valid">submit</button>
+    -->
+    <div class="profile-editor__submit" (click)="onSubmit()" >
+        <div>
+            <img src="../../assets/images/boutons/send.png" alt="confirmer l'édition" title="confirmer l'édition" />
+        </div>
+        <div>
+            <span>envoyer</span>
+        </div>
+    </div>
     
-    
+    <div class="profile-updater__post-list">
+        <app-single-post *ngFor="let post of this.user.userPosts" [post]="post" [userId]="this.user.userId" [user]="this.user"></app-single-post>
+
+        
+        
+    </div>
     
 </form>

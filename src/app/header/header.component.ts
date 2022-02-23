@@ -7,19 +7,12 @@ import { TokenStorageService } from '../_services/token-storage.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Input() userLastName?: string;
-  @Input() userFirstName?: string;
   @Input() user?: any;
   @Input() isLoggedIn?: boolean;
   
   constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
-    //console.log(this.isLoggedIn);
-    //console.log('userLastName : ' + this.userLastName);
-    
-    if(this.user)
-      console.log('userId : ' + this.user.userId);
     
   }
 

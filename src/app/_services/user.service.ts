@@ -15,19 +15,25 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getHomepageContent(): Observable<any> {
-    return this.http.get(API_URL + 'home', { responseType: 'text'});
+  /*
+  getAllPosts(): Observable<any> {
+    return this.http.get(API_URL + 'posts', { responseType: 'text'});
   }
+  */
 
-  getPublicContent(): Observable<any> {
-    return this.http.get(API_URL + 'public', { responseType: 'text' });
-  }
-
-  getUserInfo(id: string): Observable<any> {
+    getUserInfo(id: string): Observable<any> {
     return this.http.get(API_URL + `user/${id}`, { responseType: 'text' });
+  }
+
+  getUserList(): Observable<any> {
+    return this.http.get(API_URL + 'user', { responseType: 'text' });
   }
 
   updateProfile(data: FormData): Observable<any> {
     return this.http.post(API_URL + 'user', data);
+  }
+
+  changeUserRole(data: object): Observable<any> {
+    return this.http.post(API_URL + 'user/admin/changerole', data, {responseType: 'text'});
   }
 }

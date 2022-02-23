@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AuthService } from '../_services/auth.service';
+import { PostService } from '../_services/post.service';
 
 
 @Component({
@@ -10,25 +10,38 @@ import { AuthService } from '../_services/auth.service';
 })
 export class PostMakerComponent implements OnInit {
   @Input() userId?: any;
+  fileName = '';
+  postedFile!:File;
   postMakerForm = new FormGroup({
     postedContent: new FormControl('')
   })
-  constructor(private authService: AuthService) { }
+  constructor(private postService: PostService) { }
 
   ngOnInit(): void {
-    //console.log(this.userId);
     
   }
   onSubmit(): void {
-    console.log(this.postMakerForm.value.postedContent);
-    this.authService.createPost(this.userId, this.postMakerForm.value).subscribe(
+    let myFormData = new FormData();
+    myFormData.append('postedContent', this.postMakerForm.value.postedContent);
+    myFormData.append('userId', this.userId);
+    if(this.fileName) {
+      console.log('file detecté');
+      myFormData.append('file', this.postedFile, `postImage_${this.fileName}`);
+    }
+    
+    this.postService.createPost(myFormData).subscribe(
       data => {
         console.log(data);
       }
-      
     )
     window.location.reload();
-    
+  }
+  onFileSelected(event: any): void {
+    const file:File = event.target.files[0];
+    if(file) {
+      this.fileName = file.name;
+      this.postedFile = file;
+    }
   }
 
 }

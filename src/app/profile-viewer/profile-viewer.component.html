@@ -3,18 +3,42 @@
 <!-- Une fois les données reçues -->
 <div *ngIf="!loading">
     <h2>{{this.viewedUser.lastname}} {{this.viewedUser.firstname}}</h2>
+    <div class="profile-viewer__role">
+        <h3>Rôle :</h3>
+        <p *ngIf="this.user.userRole !== 'admin'">{{this.viewedUser.roleTranslated}}</p>
+        
+        <!-- Temporaire -->
+        <p *ngIf="this.user.userRole == 'admin'">{{this.viewedUser.roleTranslated}}</p>
+
+        <form *ngIf="this.user.userRole == 'admin'" [formGroup]="changeRoleForm" >
+            <select formControlName="postedNewRole" (change)="onRoleChange()">
+                <option class="role-option" value="moderator">Modérateur</option>
+                <option class="role-option" value="user">Utilisateur</option>
+            </select>
+            <div class="change-role__submit" (click)="onChangeRoleSubmit()" >
+                <div>
+                    <img src="../../assets/images/boutons/send.png" alt="confirmer l'édition" title="confirmer l'édition" />
+                </div>
+                <div>
+                    <span>envoyer</span>
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="profile-viewer__avatar-container">
         <img class="profile-viewer__avatar" src="http://localhost:3000/images/avatars/{{this.viewedUser.avatar}}" alt="avatar"/>
        
     </div>
-    <div class="profile-viewer__bio">
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Illo, repudiandae sit veniam numquam aliquid cumque consectetur placeat
-             nisi vel nulla cum commodi sint deleniti laboriosam delectus enim facere
-             a maiores.
-             
-       
-        </p>
+    <div *ngIf="this.viewedUser.bio" class="profile-viewer__bio">
+        <h3>À propos de moi :</h3>
+        <p>{{this.viewedUser.bio}}</p>
+    </div>
+
+    <div *ngIf="!loading" class="profile-viewer__post-list">
+        <h3>Derniers posts :</h3>
+        <app-single-post *ngFor="let post of this.viewedUser.posts.reverse()" [post]="post" [userId]="this.user.id" [user]="this.viewedUser"></app-single-post>
+        
+        
     </div>
     
 </div>

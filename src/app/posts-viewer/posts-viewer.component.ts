@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-posts-viewer',
@@ -7,11 +8,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PostsViewerComponent implements OnInit {
   @Input() postsData!: any;
-  constructor() { }
+  @Input() userId!: any;
+  user!: any;
+  constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
-    //console.log('this.postData (posts-viewer.ts) :');
-    //console.log(this.postsData);
+    this.user = this.tokenStorageService.getUser();
   }
 
   

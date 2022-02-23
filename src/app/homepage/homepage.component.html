@@ -1,4 +1,4 @@
 <h2>Accueil</h2>
-<app-post-maker [userId]="userId"></app-post-maker>
+<app-post-maker [userId]="user.userId"></app-post-maker>
 
-<app-posts-viewer [postsData]="postsData"></app-posts-viewer>
+<app-posts-viewer [postsData]="postsData" [userId]="user.userId"></app-posts-viewer>

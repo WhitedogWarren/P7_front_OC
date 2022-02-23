@@ -32,6 +32,10 @@ nav {
         margin: 20px;
         color: #ffd7d7;
     }
+    & a {
+        text-decoration: none;
+        font-family: 'Montserrat', sans-serif;
+    }
     & .header-avatar-container {
         border-radius: 25px;
         width: 50px;

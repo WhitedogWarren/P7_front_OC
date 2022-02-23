@@ -1,0 +1,15 @@
+
+<!--
+<span>Réaction demandée : {{data.askedReaction}}</span><br>
+<span>Réaction actuelle : {{data.currentReaction}}</span>
+-->
+<span *ngIf="data.currentReaction == data.askedReaction" >Vous avez déjà enregistré cette réaction.<br/>
+Souhaitez-vous l'annuler ?</span>
+<span *ngIf="data.currentReaction !== data.askedReaction">Vous avez déjà enregistré la réaction {{data.currentReaction}}<br/>
+Souhaitez-vous la modifier ?</span>
+
+<div mat-dialog-actions>
+
+    <button mat-button (click)="onAbort()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="{handler: data.outputHandler, reaction:data.askedReaction}" cdkFocusInitial>Ok</button>
+</div>

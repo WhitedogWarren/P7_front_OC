@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService  } from '../_services/user.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { PostService } from '../_services/post.service';
 
 
 @Component({
@@ -11,20 +11,22 @@ import { TokenStorageService } from '../_services/token-storage.service';
 export class HomepageComponent implements OnInit {
   userLastName!: string;
   userId!: string;
+  user!: any;
   postsData!: any;
-  constructor(private userService: UserService, private tokenStorageServie: TokenStorageService) { }
+  constructor(private postService: PostService, private tokenStorageServie: TokenStorageService) { }
 
   ngOnInit(): void {
     this.getPosts();
     this.userLastName = this.tokenStorageServie.getUser().userLastName;
     this.userId = this.tokenStorageServie.getUser().userId;
+    this.user = this.tokenStorageServie.getUser();
     if(!this.userLastName) {
       window.location.href = '/';
     }
   }
 
   getPosts(): void {
-    this.userService.getHomepageContent().subscribe(data => {
+    this.postService.getAllPosts().subscribe(data => {
       this.postsData = JSON.parse(data).reverse();
       //console.log(this.postsData);
     });

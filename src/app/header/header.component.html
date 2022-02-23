@@ -10,15 +10,16 @@
                 <img class="header-avatar" src="http://localhost:3000/images/avatars/{{this.user.userAvatar}}" alt="mon avatar" />
             
             </div>
-            {{userLastName}} {{userFirstName}}
+            {{user.userLastName}} {{user.userFirstName}}
         </a>
-        <a *ngIf="isLoggedIn" href (click)="logout()">LogOut</a><br/>
+        <a *ngIf="isLoggedIn" href (click)="logout()"><img src="../../assets/images/boutons/logout.png" alt="déconnexion" title="déconnexion" /></a><br/>
         
         <a *ngIf="!isLoggedIn" routerLink="login" routerLinkActive="active">login</a>
         <a *ngIf="!isLoggedIn" routerLink="signup" routerLinkActive="active">signup</a>
     </div>
         
     <div>
+        <a *ngIf="isLoggedIn && (this.user.userRole == 'admin' || this.user.userRole == 'moderator')" routerLink="moderatorDashboard" routerLinkActive="active">dashboard</a>
         <a *ngIf="isLoggedIn"  routerLink="users" routerLinkActive="active">Utilisateurs</a>
         <a *ngIf="isLoggedIn" routerLink="homepage" routerLinkActive="active">Accueil</a>
     </div>

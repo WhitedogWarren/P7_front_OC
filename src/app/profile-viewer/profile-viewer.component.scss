@@ -2,6 +2,17 @@ h2 {
     text-align: center;
 }
 
+.profile-viewer__role {
+    text-align: center;
+    & .change-role__submit {
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+    }
+}
+
+
+
 .profile-viewer__avatar-container {
     width: 200px;
     height: 200px;
@@ -17,4 +28,16 @@ h2 {
 .profile-viewer__bio {
     width: 90%;
     margin: auto;
+    margin-bottom: 40px;
+    & p {
+        white-space: pre-wrap;
+        width: 80%;
+        margin: auto;
+    }
+}
+
+.profile-viewer__post-list {
+    width: 90%;
+    margin: auto;
+
 }

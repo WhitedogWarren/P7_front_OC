@@ -29,11 +29,5 @@ export class AuthService {
             signupPassword
         }, httpOptions);
     }
-
-    createPost(user_id: string, content: string): Observable<any> {
-        return this.http.post(AUTH_API + 'posts', {
-            user_id,
-            content
-        }, httpOptions);
-    }
+    
 }

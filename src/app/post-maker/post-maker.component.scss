@@ -13,3 +13,13 @@ textarea {
         height: 10em;
     }
 }
+
+.file-input {
+    display:none;
+}
+
+.file-upload {
+    & img {
+        width: 40px;
+    }
+}

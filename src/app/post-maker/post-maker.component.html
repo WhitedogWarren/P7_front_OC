@@ -4,5 +4,14 @@
         <textarea formControlName="postedContent"></textarea>
     </div>
     
+    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+
+    <div class="file-upload">
+        {{fileName || ""}}
+
+        <div class="file-upload__button" (click)="fileUpload.click()"><img src="../../assets/images/boutons/picture.png"></div>
+
+    </div>
+
     <button type="submit" >Poster</button>
 </form>

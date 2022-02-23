@@ -1,0 +1,14 @@
+h2 {
+    text-align: center;
+}
+
+.item-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #bbbbbb;
+    padding-bottom: 20px;
+    &>div {
+        width: 30%;
+    }
+}

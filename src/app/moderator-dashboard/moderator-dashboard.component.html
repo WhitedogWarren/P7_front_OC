@@ -1,0 +1,18 @@
+<h2>Dashboard modérateur</h2>
+
+<p *ngIf="reportedLoading" >Veuillez patienter</p>
+<div *ngIf="!reportedLoading">
+    <p>Signalés : </p>
+    <app-single-post *ngFor="let post of reportedPostsData" [post]="post" [userId]="user.userId" [user]="user"></app-single-post>
+</div>
+
+<p *ngIf="moderatedLoading" >Veuillez patienter</p>
+
+<div *ngIf="!moderatedLoading">
+    <p>Corrigés :</p>
+    <app-single-post *ngFor="let post of correctedPosts" [post]="post" [userId]="user.userId" [user]="user"></app-single-post>
+    <p>non corrigés</p>
+    <app-single-post *ngFor="let post of uncorrectedPosts" [post]="post" [userId]="user.userId" [user]="user"></app-single-post>
+</div>
+
+
