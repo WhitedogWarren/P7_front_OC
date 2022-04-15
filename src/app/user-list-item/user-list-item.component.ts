@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { User } from '../interfaces/user.interface';
 
 @Component({
   selector: 'app-user-list-item',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./user-list-item.component.scss']
 })
 export class UserListItemComponent implements OnInit {
-  @Input() user!:any;
+  @Input() user!:User;
   constructor() { }
 
   ngOnInit(): void {

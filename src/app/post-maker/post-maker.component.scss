@@ -1,17 +1,19 @@
 form {
-    width: 60%;
+    width: 80%;
     margin: auto;
-    background-color: aliceblue;
+    background-color: #edf3fc;
     text-align: center;
+    & .active {
+        height: 10rem;
+    }
+    & .inactive {
+        height: 1.2rem;
+    }
 }
 
 textarea {
     width: 98%;
-    height: 4em;
     resize: none;
-    &:focus {
-        height: 10em;
-    }
 }
 
 .file-input {

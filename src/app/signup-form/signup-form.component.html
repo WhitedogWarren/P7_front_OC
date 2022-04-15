@@ -1,20 +1,39 @@
 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <p>signup</p>
-    <div class="signup-inputs">
-        <div>
-            <label for="signup-lastname">Nom : </label><br>
-            <label for="signup-firstname">Prénom : </label><br>
-            <label for="signup-email">E-mail : </label><br>
+    
+    <div class="lastname-box">
+        <div class="labels">
+            <label for="signup-lastname">Nom : </label>
+        </div>
+        <div class="inputs">
+            <input type="text" formControlName="signupLastName" id="signup-lastname">
+        </div>
+    </div>
+    <div class="firstname-box">
+        <div class="labels">
+            <label for="signup-firstname">Prénom : </label>
+        </div>
+        <div class="inputs">
+            <input type="text" formControlName="signupFirstName" id="signup-firstname">
+        </div>
+    </div>
+    <div class="email-box">
+        <div class="labels">
+            <label for="signup-email">E-mail : </label>
+        </div>
+        <div class="inputs">
+            <input type="text" formControlName="signupEmail" id="signup-email">
+        </div>
+    </div>
+    <div class="password-box">
+        <div class="labels">
             <label for="signup-password">Mot de passe :</label>
         </div>
-        <div>
-            <input type="text" formControlName="signupLastName" id="signup-lastname"><br>
-            <input type="text" formControlName="signupFirstName" id="signup-firstname"><br>
-            <input type="text" formControlName="signupEmail" id="signup-email"><br>
+        <div class="inputs">
             <input type="text" formControlName="signupPassword" id="signup-password">
         </div>
     </div>
-    
+        
     <button type="submit" [disabled]="!signupForm.valid">submit</button>
 </form>
 

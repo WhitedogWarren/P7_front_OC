@@ -1,0 +1,9 @@
+<div>
+    <h2>Attention !</h2>
+    <span>Cette action est irreversible. Souhaitez-vous vraiment continuer ?</span>
+
+    <div mat-dialog-actions>
+        <button mat-button (click)="onAbort()">Non</button>
+        <button mat-button mat-button [mat-dialog-close]="{handler: data.outputHandler}" cdkFocusInitial>Oui</button>
+    </div>
+</div>

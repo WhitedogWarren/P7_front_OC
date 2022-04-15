@@ -15,12 +15,16 @@ export class PostService {
     return this.http.get(POST_API, { responseType: 'text'});
   }
 
+  getPostShunk(postId: number): Observable<any> {
+    return this.http.get(POST_API + '/shunk/' + postId, { responseType: 'text' });
+  }
+
   getModeratedPosts(): Observable<any> {
-    return this.http.get(POST_API + '/moderator/get_moderated_posts', { responseType: 'text'});
+    return this.http.get(POST_API + '/moderator/get_moderated_posts', { responseType: 'text' });
   }
 
   getReportedPosts(): Observable<any> {
-    return this.http.get(POST_API + '/moderator/get_reported_posts', { responseType: 'text'});
+    return this.http.get(POST_API + '/moderator/get_reported_posts', { responseType: 'text' });
   }
   
   createPost(content: FormData): Observable<any> {
@@ -28,12 +32,10 @@ export class PostService {
   }
 
   deletePost(postId:string): Observable<any> {
-    console.log('postService : suppression du post n°' + postId);
     return this.http.delete(POST_API + '/' + postId);
   }
 
   editPost(postId: string, data: FormData): Observable<any> {
-    console.log('editPost lancé');
     return this.http.put(POST_API + '/' + postId, data);
   }
 
@@ -49,7 +51,6 @@ export class PostService {
   }
 
   moderatePost(postId: string, reason: string): Observable<any> {
-    console.log('demande de modération initialisée');
     return this.http.post(POST_API + '/moderator/moderate_post', {postId: postId, reason: reason});
   }
 

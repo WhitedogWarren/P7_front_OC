@@ -15,13 +15,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  /*
-  getAllPosts(): Observable<any> {
-    return this.http.get(API_URL + 'posts', { responseType: 'text'});
-  }
-  */
-
-    getUserInfo(id: string): Observable<any> {
+  getUserInfo(id: string): Observable<any> {
     return this.http.get(API_URL + `user/${id}`, { responseType: 'text' });
   }
 
@@ -35,5 +29,9 @@ export class UserService {
 
   changeUserRole(data: object): Observable<any> {
     return this.http.post(API_URL + 'user/admin/changerole', data, {responseType: 'text'});
+  }
+
+  deleteAccount(): Observable<any> {
+    return this.http.post(API_URL + 'user/delete', { responseType: 'text'});
   }
 }

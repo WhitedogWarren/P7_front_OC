@@ -1,3 +1,10 @@
+::ng-deep.mat-dialog-container {
+    //background-color: aqua;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 15px #5a90e7;
+    background-color: #edf3fc;
+}
+
 button {
     margin: 0 10px;
 }

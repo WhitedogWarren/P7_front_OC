@@ -5,13 +5,13 @@
     <h2>{{this.viewedUser.lastname}} {{this.viewedUser.firstname}}</h2>
     <div class="profile-viewer__role">
         <h3>Rôle :</h3>
-        <p *ngIf="this.user.userRole !== 'admin'">{{this.viewedUser.roleTranslated}}</p>
+        <p *ngIf="this.user.role !== 'admin'">{{this.viewedUser.roleTranslated}}</p>
         
         <!-- Temporaire -->
-        <p *ngIf="this.user.userRole == 'admin'">{{this.viewedUser.roleTranslated}}</p>
+        <p *ngIf="this.user.role == 'admin'">{{this.viewedUser.roleTranslated}}</p>
 
-        <form *ngIf="this.user.userRole == 'admin'" [formGroup]="changeRoleForm" >
-            <select formControlName="postedNewRole" (change)="onRoleChange()">
+        <form *ngIf="this.user.role == 'admin'" [formGroup]="changeRoleForm" >
+            <select formControlName="postedNewRole">
                 <option class="role-option" value="moderator">Modérateur</option>
                 <option class="role-option" value="user">Utilisateur</option>
             </select>
@@ -36,7 +36,7 @@
 
     <div *ngIf="!loading" class="profile-viewer__post-list">
         <h3>Derniers posts :</h3>
-        <app-single-post *ngFor="let post of this.viewedUser.posts.reverse()" [post]="post" [userId]="this.user.id" [user]="this.viewedUser"></app-single-post>
+        <app-single-post *ngFor="let post of this.viewedUser.posts.reverse()" [post]="post" [user]="this.viewedUser"></app-single-post>
         
         
     </div>

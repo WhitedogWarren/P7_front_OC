@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { NotificationService } from '../_services/notification.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-signup-form',
@@ -21,7 +24,7 @@ export class SignupFormComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private notificationService: NotificationService, private router: Router) { }
 
   ngOnInit(): void {}
 
@@ -36,13 +39,13 @@ export class SignupFormComponent implements OnInit {
         this.isSignupFailed = false;
         this.authService.login(signupEmail, signupPassword).subscribe({
           next: data => {
-            this.tokenStorage.saveToken(data.token);
-            this.tokenStorage.saveUser(data);
+            window.sessionStorage.setItem('auth-token', data.token);
+            this.authService.saveUser(data);
 
             this.isLoginFailed = false;
             this.isLoggedIn = true;
             //this.roles = this.tokenStorage.getUser.roles;
-            window.location.href = '/homepage';
+            this.router.navigate(['/homepage']);
           },
           error: err => {
             this.errorMessage = err.error.message;
@@ -51,6 +54,31 @@ export class SignupFormComponent implements OnInit {
         })
       },
       error: err => {
+        let message = '';
+        message += 'Formulaire invalide !<br/>';
+        console.log(err.error.emptyFields);
+        if(err.error.emptyFields) {
+          if(err.error.emptyFields.length == 1)
+            message += `Le champ ${err.error.emptyFields[0]} est vide.`;
+          else {
+            message += 'Les champs suivant sont vides :<br/>'
+            for(let field of err.error.emptyFields) {
+              message += `- ${field}<br/>`;
+            }
+          }
+        }
+        if(err.error.invalidFields) {
+          message += '<br/>';
+          if(err.error.invalidFields.length == 1)
+            message += `Le champ ${err.error.invalidFields[0]} est invalide.`;
+          else {
+            message += 'Les champs suivants sont invalides :<br/>';
+            for(let field of err.error.invalidFields) {
+              message += `- ${field}<br/>`;
+            }
+          }
+        }
+        this.notificationService.showError(message, 'Erreur !', {closeButton: true, enableHtml: true, positionClass: 'toast-bottom-center'});
         this.errorMessage = err.error.message;
         this.isSignupFailed = true;
       }

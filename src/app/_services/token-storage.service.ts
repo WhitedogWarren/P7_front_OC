@@ -1,38 +1,59 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { User } from '../interfaces/user.interface';
+import { AuthService } from './auth.service';
 
-const TOKEN_KEY = 'auth-token';
-const USER_KEY = 'auth-user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenStorageService {
+  
+  constructor(private authService: AuthService) { 
+    console.log('tss constructor');
+    const token = this.getToken();
+    if(token !== null) {
+      console.log('!== null');
+      this.authService.getUserInfo(token).subscribe({
+        next: (user: User) => {
+          this.userInfos = user;
+          console.log('from tokenStorageService constructor');
+          console.log(this.userInfos);
+          
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      })
+    }  
+  }
 
-  constructor() { }
+  private userInfos!: User;  
+  TOKEN_KEY = 'auth-token';
 
-  signOut(): void {
+  private loginConfirmedSource = new Subject<boolean>();
+
+  loginConfirmed$ = this.loginConfirmedSource.asObservable();
+
+  public confirmLogin() {
+    this.loginConfirmedSource.next(true);
+  }
+
+  public signOut(): void {
     window.sessionStorage.clear();
   }
 
-  public saveToken(token: string): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
-  }
+  
 
   public getToken(): string | null {
-    return window.sessionStorage.getItem(TOKEN_KEY);
+    return window.sessionStorage.getItem(this.TOKEN_KEY);
   }
 
-  public saveUser(user: any): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+  public saveUser(user: User): void {
+    this.userInfos = user;
   }
 
-  public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
-    if(user) {
-      return JSON.parse(user);
-    }
-    return {};
+  public getUser(): User {
+    return this.userInfos;
   }
 }

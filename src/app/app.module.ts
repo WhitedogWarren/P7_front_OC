@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 
-//import {MaterialExampleModule} from '../material.module';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -27,6 +26,9 @@ import { ProfileViewerComponent } from './profile-viewer/profile-viewer.componen
 import { UserListItemComponent } from './user-list-item/user-list-item.component';
 import { ModeratorDashboardComponent } from './moderator-dashboard/moderator-dashboard.component';
 import { ReactionDialogComponent } from './reaction-dialog/reaction-dialog.component';
+import { AccountDeletingDialogComponent } from './account-deleting-dialog/account-deleting-dialog.component';
+
+
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { ReactionDialogComponent } from './reaction-dialog/reaction-dialog.compo
     ProfileViewerComponent,
     UserListItemComponent,
     ModeratorDashboardComponent,
-    ReactionDialogComponent
+    ReactionDialogComponent,
+    AccountDeletingDialogComponent
   ],
   imports: [
     BrowserModule,

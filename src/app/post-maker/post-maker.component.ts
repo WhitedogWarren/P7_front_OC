@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { AuthService } from '../_services/auth.service';
+import { NotificationService } from '../_services/notification.service';
 import { PostService } from '../_services/post.service';
+
 
 
 @Component({
@@ -12,10 +15,11 @@ export class PostMakerComponent implements OnInit {
   @Input() userId?: any;
   fileName = '';
   postedFile!:File;
+  activePostmaking: boolean = false;
   postMakerForm = new FormGroup({
     postedContent: new FormControl('')
   })
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService, private notificationService: NotificationService, private authService: AuthService) { }
 
   ngOnInit(): void {
     
@@ -28,13 +32,24 @@ export class PostMakerComponent implements OnInit {
       console.log('file detecté');
       myFormData.append('file', this.postedFile, `postImage_${this.fileName}`);
     }
-    
-    this.postService.createPost(myFormData).subscribe(
-      data => {
+    //////
+    // TODO : prévalidation js
+    //////
+    this.postService.createPost(myFormData).subscribe({
+      next: data => {
         console.log(data);
+        window.location.reload();
+      },
+      error: err => {
+        if(err.error.message == 'jwt expired') {
+          this.authService.signOut();
+          window.location.reload();
+        }
+        
+        this.notificationService.showError(err.error.message, 'Erreur', {closeButton: true, positionClass: 'toast-bottom-center'});
+
       }
-    )
-    window.location.reload();
+    })
   }
   onFileSelected(event: any): void {
     const file:File = event.target.files[0];
@@ -42,6 +57,9 @@ export class PostMakerComponent implements OnInit {
       this.fileName = file.name;
       this.postedFile = file;
     }
+  }
+  activatePostmaking(): void {
+    this.activePostmaking = true;
   }
 
 }

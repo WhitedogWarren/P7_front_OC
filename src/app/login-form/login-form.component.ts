@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
-import { TokenStorageService } from '../_services/token-storage.service';
+import { NotificationService } from '../_services/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -13,18 +14,13 @@ export class LoginFormComponent implements OnInit {
     loginEmail: new FormControl(''),
     loginPassword: new FormControl('')
   });
-  isLoggedIn = false;
-  isLoginFailed = false;
+  //@Input() isLoggedIn!:boolean;
   errorMessage = '';
-  //roles: string[] = [];
-
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  
+  constructor(private authService: AuthService, private notificationService: NotificationService, private router: Router) { }
 
   ngOnInit(): void {
-    if(this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-      //this.roles = this.tokenStorage.getUser().roles;
-    }
+    
   }
 
   onSubmit(): void {
@@ -32,23 +28,18 @@ export class LoginFormComponent implements OnInit {
     
     this.authService.login(loginEmail, loginPassword).subscribe({
       next: data => {
-        this.tokenStorage.saveToken(data.token);
-        this.tokenStorage.saveUser(data);
-
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        //this.roles = this.tokenStorage.getUser.roles;
-        this.reloadPage();
+        window.sessionStorage.setItem('auth-token', data.token);
+        delete data.token;
+        this.authService.authStatusSource.next({isLogged: true, user: data});
+        //console.log(this.authService.authStatus$);
+        this.router.navigate(['/homepage']);
       },
       error: err => {
+        console.log(err.error.message);
+        this.notificationService.showError(err.error.message, 'Erreur !', {closeButton: true, positionClass: 'toast-bottom-center'});
         this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
+        
       }
     });
   }
-
-  reloadPage(): void {
-    window.location.href = '/homepage';
-  }
-
 }

@@ -5,16 +5,31 @@ form {
     border: 2px solid #091f43;
     border-radius: 15px;
     padding: 20px;
-}
-
-.login-inputs {
-    display: flex;
-    text-align: left;
-    & label {
-        line-height: 1.6em;
+    & .labels {
+        margin-right: 20px;
     }
-    & input {
-        margin-bottom: 6px;
-        margin-left: 10px;
+    & .inputs {
+        margin: 5px 0;
+    }
+    & .email-box, & .password-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+@media screen and (max-width: 450px) {
+    form {
+        width: 80%;
+        & .email-box, & .password-box {
+            flex-direction: column;
+        }
+        & .labels {
+            width: 100%;
+            text-align: left;
+        }
+        & .inputs {
+            width: 100%;
+            text-align: right;
+        }
     }
 }

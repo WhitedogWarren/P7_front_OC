@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TokenStorageService } from '../_services/token-storage.service';
+import { Router } from '@angular/router';
+import { AuthStatus } from '../interfaces/authStatus.interface';
+import { AuthService } from '../_services/auth.service';
+
 
 @Component({
   selector: 'app-header',
@@ -7,18 +10,22 @@ import { TokenStorageService } from '../_services/token-storage.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Input() user?: any;
-  @Input() isLoggedIn?: boolean;
+  authStatus!: AuthStatus;
   
-  constructor(private tokenStorageService: TokenStorageService) { }
+  
+  constructor(private authService: AuthService, private router: Router) {
+    this.authService.authStatus$.subscribe((authStatus:AuthStatus) => {
+      this.authStatus = authStatus;
+    })
+  }
 
   ngOnInit(): void {
     
   }
 
   logout(): void {
-    this.tokenStorageService.signOut();
-    window.location.reload();
+    this.authService.signOut();
+    this.router.navigate(['/login']);
   }
 
 }

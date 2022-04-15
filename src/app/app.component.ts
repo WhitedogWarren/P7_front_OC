@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from './_services/token-storage.service';
+import { AuthService } from './_services/auth.service';
+import { User } from './interfaces/user.interface';
+import { Router } from '@angular/router';
+import { AuthStatus } from './interfaces/authStatus.interface';
 
 @Component({
   selector: 'app-root',
@@ -7,26 +11,38 @@ import { TokenStorageService } from './_services/token-storage.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  constructor(/*private tokenStorageService: TokenStorageService, */ private authService: AuthService, private router: Router) {
+    authService.authStatus$.subscribe((authStatus) => {
+      
+      this.user = authStatus.user;
+      console.log(this.user);
+      
+    })
+  }
+
   title = 'groupomania';
-  isLoggedIn = false;
-  user?: object;
-  //private roles: string[] = [];
-
-  constructor(private tokenStorageService: TokenStorageService) { }
-
+  user!: User | null;
+  
   ngOnInit(): void {
-      this.isLoggedIn = !!this.tokenStorageService.getToken();
-      if (this.isLoggedIn) {
-        const user = this.tokenStorageService.getUser();
-        //this.roles = user.roles;
-
-        //this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-        this.user = user;
-      }
+    console.log(window.sessionStorage.getItem('auth-token'));
+    if (window.sessionStorage.getItem('auth-token')) {
+      this.authService.authStatus$.subscribe((authStatus: AuthStatus) => {
+        console.log(authStatus);
+        this.user = authStatus.user;
+      })
+      console.log(this.user);
+      this.router.navigate(['/homepage']);
+    }
+    else {
+      console.log('perdu');
+      this.authService.authStatusSource.next({isLogged: false, user: null})
+      this.router.navigate(['/login']);
+    }
   }
 
   logout(): void {
-    this.tokenStorageService.signOut();
+    this.authService.signOut();
     window.location.reload();
   }
 }

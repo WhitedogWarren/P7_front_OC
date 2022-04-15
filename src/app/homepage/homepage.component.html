@@ -1,4 +1,8 @@
-<h2>Accueil</h2>
-<app-post-maker [userId]="user.userId"></app-post-maker>
-
-<app-posts-viewer [postsData]="postsData" [userId]="user.userId"></app-posts-viewer>
+<div *ngIf="user">
+    <h2>Accueil</h2>
+        <app-post-maker [userId]="user?.id"></app-post-maker>
+    
+        <app-posts-viewer [postsData]="postsData" ></app-posts-viewer>
+    
+    
+</div>

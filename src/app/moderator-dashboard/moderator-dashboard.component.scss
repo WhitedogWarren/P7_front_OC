@@ -1,3 +1,13 @@
 h2 {
     text-align: center;
 }
+
+.dashboard-section {
+    border-bottom: 2px solid #bbbbbb;
+    &__heading {
+        font-weight: bold;
+    }
+    &__no-content {
+        margin-left: 20px;
+    }
+}

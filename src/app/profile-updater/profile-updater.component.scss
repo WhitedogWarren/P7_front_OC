@@ -3,10 +3,66 @@ h2 {
 }
 
 .name-fieldset {
-    display: flex;
     border: none;
     width:fit-content;
     margin:auto;
+    & input {
+        border: 1px solid grey;
+        border-radius: 5px;
+    }
+    & label {
+        padding: 6px 20px;
+    }
+    &__lastname-box, &__firstname-box {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+}
+@media screen and (max-width: 535px) {
+    .name-fieldset {
+        width: 100%;
+        & label {
+            padding: 6px 0;
+        }
+        &__lastname-box, &__firstname-box {
+            flex-direction: column;
+        }
+    }
+    .inputs {
+        text-align: right;
+    }
+}
+
+.password-update {
+    border: none;
+    width:fit-content;
+    margin:auto;
+    & input {
+        border: 1px solid grey;
+        border-radius: 5px;
+    }
+    & label {
+        padding: 6px 20px;
+    }
+    &__actual-password, &__new-password1, &__new-password2 {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+@media screen and (max-width: 535px) {
+    .password-update {
+        width: 100%;
+        & label {
+            padding: 6px 0;
+        }
+        &__actual-password, &__new-password1, &__new-password2 {
+            flex-direction: column;
+        }
+    }
+    .inputs {
+        text-align: right;
+    }
 }
 
 .avatar-fieldset {
@@ -29,21 +85,24 @@ h2 {
             object-fit: cover;
         }
     }
-}
-
-.profile-update__labels {
-    padding: 0 20px;
-    line-height: 1.6em;
-}
-
-.profile-update__inputs {
-    & input {
-        margin-bottom: 6px;
-        margin-left: 10px;
-        border: 1px solid grey;
-        border-radius: 5px;
+    & #avatarInput {
+        display: none;
     }
 }
+@media screen and (max-width: 500px) {
+    .avatar-fieldset .avatar-viewer {
+        width: 250px;
+        height: 250px;
+        margin: auto;
+    }
+}
+@media screen and (max-width: 300px) {
+    .avatar-fieldset .avatar-viewer {
+        width: 200px;
+        height: 200px;
+    }
+}
+
 
 .bio-fieldset {
     border: none;
