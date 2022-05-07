@@ -1,0 +1,29 @@
+<h2>Dashboard modérateur</h2>
+
+<p *ngIf="reportedLoading" >Veuillez patienter</p>
+<div *ngIf="!reportedLoading" class="dashboard-section">
+    <h3 class="dashboard-section__heading">Signalés : </h3>
+    <div *ngIf="reportedPosts.length == 0">
+        <p class="dashboard-section__no-content">Aucun</p>
+    </div>
+    <app-single-post *ngFor="let post of reportedPosts" [post]="post" [user]="user" ></app-single-post>
+</div>
+
+<p *ngIf="moderatedLoading" >Veuillez patienter</p>
+
+<div *ngIf="!moderatedLoading">
+    <div class="dashboard-section">
+        <h3 class="dashboard-section__heading">Corrigés :</h3>
+        <div *ngIf="correctedPosts.length == 0">
+            <p class="dashboard-section__no-content">Aucun</p>
+        </div>
+        <app-single-post *ngFor="let post of correctedPosts" [post]="post" [user]="user"></app-single-post>
+    </div>
+    <div class="dashboard-section">
+        <h3 class="dashboard-section__heading">non corrigés :</h3>
+        <div *ngIf="uncorrectedPosts.length == 0">
+            <p class="dashboard-section__no-content">Aucun</p>
+        </div>
+        <app-single-post *ngFor="let post of uncorrectedPosts" [post]="post" [user]="user" ></app-single-post>
+    </div>
+</div>

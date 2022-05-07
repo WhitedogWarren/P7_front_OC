@@ -1,8 +1,0 @@
-<div
-infinite-scroll 
-
-(scrolled)="onScrollDown($event)" 
-(scrolledUp)="onScrollUp($event)">
-    <app-single-post *ngFor="let post of postsData" [post]="post" [user]="this.user"></app-single-post>
-</div>
-<!--[scrollWindow]="false"-->

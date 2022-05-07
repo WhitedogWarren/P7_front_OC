@@ -1,0 +1,104 @@
+<div *ngIf="showPost()">
+    <div *ngIf="!this.editMode" class="post-container" [ngClass]="{'moderated-post': post.moderated, 'normal-post': !post.moderated}">
+        
+            <div class="post-heading">
+                <a routerLink="../users/{{post.User.id}}" routerLinkActive="active">
+                    <div class="post-label">
+                        <div class="post-label__avatar-container">
+                            <img src="http://localhost:3000/images/avatars/{{post.User.avatarUrl}}" alt="avatar" />
+                        </div>
+                        <div>{{post.User.lastname}} {{post.User.firstname}} a dit :</div>
+                    </div>
+                </a>
+                <div *ngIf="user?.id===post.User.id" class="post-edit-icons">
+                    <div>
+                        <img src="../../assets/images/boutons/pen.png" alt="éditer le post" title="éditer le post" (click)="editPost()">
+                    </div>
+                    <div>
+                        <img src="../../assets/images/boutons/trash.png" alt="supprimer le post" title="supprimer le post" (click)="deletePost()">
+                    </div>
+                </div>
+            </div>
+        <p class="post-text-content"><img *ngIf="this.post.imageUrl" class="post-image" src="http://localhost:3000/images/postImage/{{post.imageUrl}}" alt="image du post"/>
+            <span>{{post.content}}</span>
+        </p>
+        <div class="reaction-panel">
+            <div class="reaction-box">
+                <div class="reaction-box__label">Réactions :</div>
+                <div class="reaction-box__buttons">
+                    <div>
+                        <img src="../../assets/images/boutons/like.png" alt="liker le post" title="J'aime" [ngClass]="{'cliquable': isCliquable()}" (click)="reactToPost('like')"/><br/>
+                        <span *ngIf="liked.length > 0">{{liked.length}}</span>
+                    </div>
+                    <div>
+                        <img src="../../assets/images/boutons/love.png" alt="adorer le post" title="J'adore" [ngClass]="{'cliquable': isCliquable()}" (click)="reactToPost('love')"/><br/>
+                        <span *ngIf="loved.length > 0">{{loved.length}}</span>
+                    </div>
+                    <div>
+                        <img src="../../assets/images/boutons/laugh.png" alt="adorer le post" title="&Ccedil;a me fait rire" [ngClass]="{'cliquable': isCliquable()}" (click)="reactToPost('laugh')"/><br/>
+                        <span *ngIf="laughed.length > 0">{{laughed.length}}</span>
+                    </div>
+                    <div>
+                        <img src="../../assets/images/boutons/anger.png" alt="adorer le post" title="&Ccedil;a me met en colère" [ngClass]="{'cliquable': isCliquable()}" (click)="reactToPost('anger')"/><br/>
+                        <span *ngIf="angered.length > 0">{{angered.length}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="report-box">
+                <span *ngIf="post.reported.length > 0">Ce post a été signalé {{post.reported.length}} fois</span>
+                <div *ngIf="user && !post.reported.includes(user.id) && post.User.role == 'user' && user.role == 'user' && post.User.id !== user.id" class="report-button" title="Signaler le post" (click)="reportPost()">
+                    <img src="../../assets/images/boutons/warning.png" alt="Signaler le post" />
+                    Signaler
+                </div>
+                <div *ngIf="user && (post.reported.includes(user.id) || user?.role !== 'user') && post.reported.length > 0">
+                    <div class="unreport-button" title="annuler le signalement" (click)="unreportPost()">
+                        <img src="../../assets/images/boutons/croix.png" alt="annuler le signalement" />
+                        Annuler le signalement
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="moderation-box">
+            <div class="moderation-infos" *ngIf="post.moderated && (user?.role == 'moderator' || user?.role == 'admin' || user?.id == post.User.id)">
+                <span>Ce post a été modéré pour la raison suivante :</span>
+                <p class="moderation-reason">"{{post.reasonForModeration}}"</p>
+            </div>
+            <div class="submit-correction">
+                <div *ngIf="user?.id == post.User.id && post.moderated && !post.corrected" class="submit-correction-button" title="signaler comme corrigé" (click)="sendCorrection()">
+                    <img src="../../assets/images/boutons/send_pink.png" alt="signaler comme corrigé" />
+                    Signaler comme corrigé
+                </div>
+                <div *ngIf="user?.id == post.User.id && post.moderated && post.corrected" class="submit-correction-abort-button" title="annule la notification de message corrigé" (click)="avoidCorrection()">
+                    <img src="../../assets/images/boutons/croix_pink.png" alt="signaler comme non corrigé" />
+                    signaler comme non corrigé
+                </div>
+            </div>
+            <div class="moderation-toolbar" *ngIf="(user?.role == 'moderator' || user?.role == 'admin') && user?.id !== post.User.id">
+                <div *ngIf="!post.moderated">
+                    <div *ngIf="!this.moderateMode" class="moderation-button" (click)="activateModerationForm()" title="modérer le post">
+                        <img src="../../assets/images/boutons/warning_pink.png" alt="modérer le post" />
+                        modérer
+                    </div>
+                    <div *ngIf="this.moderateMode" class="moderation-form">
+                        <span>
+                            raison de la modération :
+                        </span>
+                        <form [formGroup]="postmoderationForm">
+                            <textarea formControlName="reasonForModeration" class="moderation-reason-input"></textarea>
+                        </form>
+                        <div class="moderation-form-buttons">
+                            <div class="cancel-moderation" (click)="deactivateModerationForm()" title="annuler l'édition"><img src="../../assets/images/boutons/croix.png" alt="annuler l'édition" />annuler</div>
+                            <div class="submit-moderation" (click)="moderatePost()" title="confirmer l'édition"><img src="../../assets/images/boutons/send_pink.png" alt="confirmer l'édition" />valider</div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="post.moderated">
+                    <div class="submit-unmoderation" (click)="unmoderatePost()"><img src="../../assets/images/boutons/croix_pink.png" alt="annuler l'édition" />Enlever la modération</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-editor" *ngIf="editMode">
+        <app-post-editor (cancelEvent)="cancelEdition()" [post]="post" [user]="user"></app-post-editor>
+    </div>
+</div>

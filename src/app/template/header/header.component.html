@@ -1,0 +1,54 @@
+<div>
+    <div class="header-main-block">
+        <div class="header-branding">
+            <img src="../../assets/images/logos/icon_300.png" alt="logo groupomania" class="header__logo" [ngClass]="{'shrinked': isShrinked}">
+            <h1>Groupomania</h1>
+        </div>
+            
+        <div class="header-log">
+            <div class="logged-box" *ngIf="authStatus?.isLogged">
+                
+                    <div class="header-avatar-container">
+                        <a class="header-log__usermenu" *ngIf="authStatus?.isLogged" routerLink="users/me" routerLinkActive="active">
+                            <img class="header-avatar" src="http://localhost:3000/images/avatars/{{authStatus.user?.avatarUrl}}" alt="mon avatar" />
+                        </a>
+                    </div>
+                    <a class="header-log__usermenu" *ngIf="authStatus.isLogged" routerLink="users/me" routerLinkActive="active">
+                        <span class="header-log__username">{{authStatus.user?.lastname}} {{authStatus.user?.firstname}}</span>
+                    </a>
+            </div>
+            <div *ngIf="authStatus?.isLogged">
+                <a *ngIf="authStatus.isLogged" class="logout-button" href (click)="logout()"><img src="../../assets/images/boutons/logout.png" alt="déconnexion" title="déconnexion" /></a><br/>
+            </div>
+            
+            <div *ngIf="!authStatus?.isLogged" class="login-links">
+                <a routerLink="auth/login" routerLinkActive="active">login</a>
+                <a routerLink="auth/signup" routerLinkActive="active">signup</a>
+            </div>
+            
+        </div>
+    </div>
+    
+    <nav class="hamburger-keeper-items">        
+        <div class="hamburger-ghost-mirror"> </div>
+        <div class="hamburger-keeper-items">
+            <a class="hamburger-keeper-items" *ngIf="authStatus?.isLogged" routerLink="homepage" routerLinkActive="active">Accueil</a>
+        </div>
+        <div class="hamburger-keeper-items">
+            <a class="hamburger-keeper-items" *ngIf="authStatus?.isLogged"  routerLink="users" routerLinkActive="active">Utilisateurs</a>
+        </div>
+        <div class="hamburger-keeper-items">
+            <a class="hamburger-keeper-items" *ngIf="authStatus?.isLogged && (authStatus.user?.role == 'admin' || authStatus.user?.role == 'moderator')" routerLink="moderatorDashboard" routerLinkActive="active">dashboard</a>
+        </div>
+        <div class="hamburger-button-container hamburger-keeper-items" [ngClass]="{'displayed': isShrinked}"  (click)="displayHamburgerMenu()" (mouseover)="displayHamburgerMenu()">
+            <img id="hamburger-button" class="hamburger-keeper-items" src="../../../assets/images/boutons/hamburger.png">
+        </div>
+           
+    </nav>
+    <div id="hamburger-menu" class="hamburger-keeper-items" [ngClass]="{'displayed': hamburgerDisplayed}" >
+        <a class="hamburger-links hamburger-keeper-items" routerLink="users/me">Mon profil</a>
+        <br>
+        <a class="hamburger-links hamburger-keeper-items" *ngIf="authStatus.isLogged" href (click)="logout()">Se déconnecter</a>
+        
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="userlist-item">
+    <a class="user-link" routerLink="../users/{{user.id}}" routerLinkActive="active">
+        <div class="userlist-item__image-container">
+            <img class="userlist-item-image" src="http://localhost:3000/images/avatars/{{user.avatarUrl}}" alt="avatar" />
+        </div>
+        <span>{{user.lastname}} {{user.firstname}}</span>
+    </a>
+</div>

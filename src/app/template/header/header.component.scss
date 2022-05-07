@@ -1,0 +1,246 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+    transition: 0.4s;
+    &.shrinked {
+        top: -200px;
+    }
+}
+
+h1 {
+    color: #ffd7d7;
+    height: fit-content;
+    align-self: center;
+    font-size: 60px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+p, a {
+    color: #ffd7d7;
+    margin: 20px;
+    text-decoration: none;
+}
+
+.header-main-block {
+    display: flex;
+    justify-content: space-between;
+    background-color: #091f43;
+    height: 200px;
+}
+
+.header-branding {
+    display:flex;
+    align-items: center;
+}
+
+.header__logo {
+    height: 200px;
+    position: relative;
+    top: 0;
+    transition: 0.4s ;
+    &.shrinked {
+        top: 110px;
+        height: 20px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    :host.shrinked {
+        top: -150px;
+    }
+    .header-main-block {
+        height: 150px;
+    }
+    .header-branding {
+        //height: fit-content;
+        & .header__logo {
+            height: 150px;
+            &.shrinked {
+                top: 85px;
+                height: 20px;
+            }
+        }
+    }
+    h1 {
+        font-size: 46px;
+    }
+}
+@media screen and (max-width: 768px) {
+    :host.shrinked {
+        top: -100px;
+    }
+    .header-main-block {
+        height: 100px;
+    }
+    .header-branding .header__logo {
+        height: 100px;
+        &.shrinked {
+            top: 60px;
+        }
+    }
+    h1 {
+        font-size: 34px;
+        margin: 0;
+    }
+}
+@media screen and (max-width: 535px) {
+    :host.shrinked {
+        top: -50px;
+    }
+    .header-main-block {
+        height: 50px;
+    }
+    .header-branding .header__logo {
+        height: 50px;
+        &.shrinked {
+            top: 35px;
+        }
+    }
+    h1 {
+        font-size: 20px;
+    }
+}
+@media screen and (max-width: 375px) {
+    .header-branding .header__logo {
+        height: 40px;
+    }
+    h1 {
+        font-size: 18px;
+    }
+}
+
+.header-log {
+    display: flex;
+    padding-top: 10px;
+    & .header-avatar-container {
+        border-radius: 25px;
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        & a {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    & .header-avatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: none;
+    }
+    &__usermenu {
+        display: inline-block;
+    }
+}
+@media screen and (max-width: 768px) {
+    .header-log {
+        & a {
+            margin: 0 15px;
+        }
+        & .header-avatar-container {
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+        }
+        & .login-links a {
+            margin: 0 20px;
+        }
+    }
+}
+@media screen and (max-width: 535px) {
+    .header-log {
+        & a {
+            font-size: 12px;
+            & .header-avatar-container {
+                width: 28px;
+                height: 28px;
+                border-radius: 14px;
+            }
+            & .header-log__username {
+                display: none;
+            }
+        }
+        & .login-links {
+            & a {
+                display:block;
+            }
+        }
+    }
+    .logout-button img {
+        height: 12px;
+    }
+}
+
+nav {
+    display: flex;
+    width: 100%;
+    justify-content:flex-end;
+    background-color: #091f43;
+    & a {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 768px) {
+    nav {
+        justify-content: space-between;
+        & a {
+            margin: 20px 5px;
+            font-size: 12px;
+        }
+    }
+}
+
+.hamburger-button-container {
+    padding-right: 0;
+    width: 0;
+    overflow: hidden;
+    transition: all 0.4s;
+    &.displayed {
+        width: 20px;
+        padding-right: 20px;
+    }
+}
+.hamburger-ghost-mirror {
+    width: 20px;
+    height: 20px;
+}
+@media screen and (max-width: 992px) {
+    .hamburger-button-container.displayed {
+        padding-right: 10px;
+    }
+}
+#hamburger-menu {
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 0;
+    background-color: #091f43;
+    height: 0;
+    overflow: hidden;
+    //position: relative;   //=> l'élément occupe tout de même sa place finale dans le DOM,
+    //top: 240px;           // empêchant les interactions avec le contenu principal situé
+    //transform: scale(0);  // à la même hauteur
+    //transform-origin: top right;
+    transition: all 0.4s;
+    //display: none;
+    &.displayed {
+        //height: fit-content;  //=> incompatible avec la transition
+        height: 80px;           //=> passer par des variables pour prendre en compte le redimensionnement de la police ?
+        padding: 10px 0;
+        //top: 0;
+        //display: block;
+        //transform: scale(1);
+    }
+    & .hamburger-links {
+        display: inline-block;
+        margin: 10px 20px;
+    } 
+}

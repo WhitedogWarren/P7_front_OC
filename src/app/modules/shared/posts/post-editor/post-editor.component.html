@@ -1,0 +1,35 @@
+<form class="post-editor" [formGroup]="postEditForm">
+    <div class="post-editor-heading">
+        <img class="post-editor__cancel" src="../../assets/images/boutons/croix.png" alt="annuler l'édition" title="annuler l'édition" (click)="cancelEdition()" />
+    </div>
+    <!-- post has an image -->
+    <div *ngIf="this.post.imageUrl" class="image-editor">
+        <div>
+            <img class="image-editor__thumb" src="http://localhost:3000/images/postImage/{{post.imageUrl}}" alt="image du post"/>
+        </div>
+        <div class="image-editor__buttons-box">
+            <img class="image-editor__replace" src="../../assets/images/boutons/replace.png" alt="remplacer l'image" title="remplacer l'image" (click)="fileUpload.click()"/><br>
+            <img class="image-editor__delete" src="../../assets/images/boutons/trash.png" alt="supprimer l'image" title="supprimer l'image" (click)="onDeleteImage()" />
+        </div>
+    </div>
+    <!-- post don't have an image -->
+    <div *ngIf="!this.post.imageUrl" class="image-adding">
+        <div>
+            <img class="image-adding__thumb" src="../../assets/images/boutons/picture.png" alt="ajouter une image" title="ajouter une image" (click)="fileUpload.click()" />
+        </div>
+        <div *ngIf="fileName !== ''">
+            <img class="image-editor__replace" src="../../assets/images/boutons/replace.png" alt="remplacer l'image" title="remplacer l'image" (click)="fileUpload.click()"/><br>
+            <img class="image-editor__delete" src="../../assets/images/boutons/croix.png" alt="supprimer l'image" title="supprimer l'image" (click)="onAvoidImageAdding()" />
+        </div>
+    </div>
+    <textarea formControlName="editedContent" class="content-editor" >{{post.content}}</textarea>
+    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+    <div class="post-editor__submit" (click)="onEditPost()" >
+        <div>
+            <img src="../../assets/images/boutons/send.png" alt="confirmer l'édition" title="confirmer l'édition" />
+        </div>
+        <div>
+            <span>envoyer</span>
+        </div>
+    </div>
+</form>

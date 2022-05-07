@@ -1,6 +1,13 @@
-<app-header 
-    
-></app-header>
-<main>
-    <router-outlet></router-outlet>
-</main>
+<div class="app-viewer">
+    <header >
+        <app-header [ngClass]="{'shrinked': this.isShrinked}" [isShrinked]="isShrinked"></app-header>
+    </header>
+    <div id="main-viewer">
+        <main>
+            <div class="router-outlet-viewer">
+                <router-outlet></router-outlet>
+            </div>
+        </main>
+    </div>
+</div>
+

@@ -1,0 +1,83 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-webkit-autofill-selected,
+input:-webkit-autofill-previewed {
+    box-shadow: 0 0 0 50px white inset !important;
+    -webkit-box-shadow: 0 0 0 50px white inset;
+    &.ng-valid {
+        background-image: url(./../../../../../assets/images/icons/green_check.png) !important;
+        background-position: top right;
+        background-repeat: no-repeat;
+    }
+}
+
+
+input:-internal-autofill-selected {
+    box-shadow: 0 0 0 50px white inset !important;
+    -webkit-box-shadow: 0 0 0 50px white inset; 
+    &.ng-valid {
+        background-image: url(./../../../../../assets/images/icons/green_check.png) !important;
+        background-position: top right;
+        background-repeat: no-repeat;
+    }
+}
+
+
+form {
+    width: fit-content;
+    text-align: center;
+    margin: auto;
+    border: 2px solid #091f43;
+    border-radius: 15px;
+    padding: 20px;
+    & .labels {
+        margin-right: 20px;
+    }
+    & input {
+        padding-right: 16px;
+    }
+    & .inputs {
+        margin: 5px 0;
+        & .ng-valid {
+            background-image: url(./../../../../../assets/images/icons/green_check.png) !important;
+            background-position: top right;
+            background-repeat: no-repeat;
+        }
+    }
+    & .lastname-box, & .firstname-box, & .email-box, & .password-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    & .input-helpers {
+        &.invalid {
+            color: red;
+        }
+    }
+    & .password-helper {
+        text-align: left;
+        display: inline-block;
+        height: 20px;
+        & img {
+            margin: 0;
+            padding:0;
+        }
+    }
+}
+@media screen and (max-width: 450px) {
+    form {
+        width: 80%;
+        & .lastname-box, & .firstname-box, & .email-box, & .password-box {
+            flex-direction: column;
+        }
+        & .labels {
+            width: 100%;
+            text-align: left;
+        }
+        & .inputs {
+            width: 100%;
+            text-align: right;
+        }
+    }
+}

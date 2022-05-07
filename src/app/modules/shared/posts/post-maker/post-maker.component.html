@@ -1,0 +1,12 @@
+<form [formGroup]="postMakerForm" (ngSubmit)="onSubmit()">
+    <p>Postez un nouveau contenu</p>
+    <div>
+        <textarea formControlName="postedContent" (click)="activatePostmaking()" [ngClass]="{'inactive': activePostmaking==false, 'active': activePostmaking==true}"></textarea>
+    </div>
+    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+    <div class="file-upload">
+        {{fileName || ""}}
+        <div class="file-upload__button" (click)="fileUpload.click()"><img src="../../assets/images/boutons/picture.png"></div>
+    </div>
+    <button type="submit" >Poster</button>
+</form>

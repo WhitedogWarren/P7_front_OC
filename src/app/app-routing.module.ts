@@ -1,20 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SignupFormComponent } from './signup-form/signup-form.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { UsersDisplayComponent } from './users-display/users-display.component';
-import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
-import { ModeratorDashboardComponent } from './moderator-dashboard/moderator-dashboard.component';
+import { HomepageComponent } from './template/homepage/homepage.component';
+import { ModeratorDashboardComponent } from './template/moderator-dashboard/moderator-dashboard.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: 'login', component: LoginFormComponent },
-  { path: 'signup', component: SignupFormComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'auth/login' },
   { path: 'homepage', component: HomepageComponent},
-  { path: 'users', component: UsersDisplayComponent},
-  { path: 'users/:id', component: UserDashboardComponent},
-  { path: 'moderatorDashboard', component: ModeratorDashboardComponent}
+  { path: 'moderatorDashboard', component: ModeratorDashboardComponent},
+  { path: 'auth', loadChildren: () => import('./modules/routing/auth/auth.module').then(m => m.AuthModule) },
+  { path: 'users', loadChildren: () => import('./modules/routing/users/users.module').then(m => m.UsersModule) },
 ];
 
 @NgModule({

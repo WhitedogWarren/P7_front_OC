@@ -1,0 +1,50 @@
+.post-editor {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+    border: 1px solid grey;
+    border-radius: 5px;
+    &-heading {
+        text-align: right;
+        & img {
+            cursor: pointer;
+        }
+    }
+    & .content-editor {
+        width: 98%;
+        height: 200px;
+        resize: none;
+        margin: auto;
+        }
+    & .image-editor {
+        text-align: left;
+        display: flex;
+        & .image-editor__thumb {
+            margin: 5px;
+            width: 100px;
+        }
+        &__buttons-box {
+            padding: 5px;
+            & img {
+                cursor: pointer;
+                border: 1px solid rgba(0, 0, 0, 0);
+                &:hover {
+                    border: 1px solid grey;
+                }
+            }
+        }
+    }
+    & .file-input {
+        display: none;
+    }
+    & .image-adding__thumb {
+        max-width: 100px;
+    }
+    &__submit {
+        display: flex;
+        align-content: center;
+        width: fit-content;
+        margin: auto;
+        cursor: pointer;
+    }
+}

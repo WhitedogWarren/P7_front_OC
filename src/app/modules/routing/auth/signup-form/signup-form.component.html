@@ -1,0 +1,50 @@
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <p>signup</p>
+    
+    <div class="lastname-box">
+        <div class="labels">
+            <label for="signup-lastname">Nom : </label>
+        </div>
+        <div class="inputs">
+            <input type="text" formControlName="signupLastName" id="signup-lastname" (change)="setBGImage($event)">
+        </div>
+    </div>
+    <div class="firstname-box">
+        <div class="labels">
+            <label for="signup-firstname">Prénom : </label>
+        </div>
+        <div class="inputs">
+            <input type="text" formControlName="signupFirstName" id="signup-firstname">
+        </div>
+    </div>
+    <div class="email-box">
+        <div class="labels">
+            <label for="signup-email">E-mail : </label>
+        </div>
+        <div class="inputs">
+            <input type="text" formControlName="signupEmail" id="signup-email">
+        </div>
+    </div>
+    <div class="password-box">
+        <div class="labels">
+            <label for="signup-password">Mot de passe :</label>
+        </div>
+        <div class="inputs">
+            <input type="text" class="form-control" formControlName="signupPassword" id="signup-password">
+        </div>
+    </div>
+    <div class="password-helper" *ngIf="signupForm.controls['signupPassword'].errors?.['pattern']">
+        mot de passe invalide<br>
+        Il doit contenir :<br>
+        - <span class="input-helpers" [ngClass]="{invalid: !hasLowercase(signupForm.controls['signupPassword'].value)}">une minuscule <img *ngIf="hasLowercase(signupForm.controls['signupPassword'].value)" src="../../../../../assets/images/icons/green_check.png" alt="ok"></span><br>
+        - <span class="input-helpers" [ngClass]="{invalid: !hasUppercase(signupForm.controls['signupPassword'].value)}">une majuscule <img *ngIf="hasUppercase(signupForm.controls['signupPassword'].value)" src="../../../../../assets/images/icons/green_check.png" alt="ok"></span><br>
+        - <span class="input-helpers" [ngClass]="{invalid: !hasNumber(signupForm.controls['signupPassword'].value)}">un chiffre <img *ngIf="hasNumber(signupForm.controls['signupPassword'].value)" src="../../../../../assets/images/icons/green_check.png" alt="ok"></span><br>
+        - <span class="input-helpers" [ngClass]="{invalid: !hasEnoughDigits(signupForm.controls['signupPassword'].value)}">au moins 8 caractères <img *ngIf="hasEnoughDigits(signupForm.controls['signupPassword'].value)" src="../../../../../assets/images/icons/green_check.png" alt="ok"></span><br>
+        caractères spéciaux autorisés : + - * / = ! @ _ &
+    </div>
+    <div>
+        <button type="submit" [disabled]="!signupForm.valid">submit</button>
+    </div>    
+    
+</form>
+

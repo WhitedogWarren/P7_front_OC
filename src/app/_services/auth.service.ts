@@ -1,9 +1,12 @@
+//angular modules and services
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+
+//interfaces
 import { User } from '../interfaces/user.interface';
 import { AuthStatus } from '../interfaces/authStatus.interface';
-
+import { UserApiResponse } from '../modules/routing/users/usersApiResponse.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -11,45 +14,30 @@ import { AuthStatus } from '../interfaces/authStatus.interface';
 export class AuthService {
     
     constructor(private http: HttpClient) {
-        console.log('authService init');
-        if(window.sessionStorage.getItem('auth-token'))  {
-            
-            this.getUserInfo(window.sessionStorage.getItem('auth-token')).subscribe({
+        if(window.localStorage.getItem('auth-token'))  {
+            this.getUserInfo(window.localStorage.getItem('auth-token')).subscribe({
                 next: data => {
                     this.authStatusSource.next({isLogged: true, user: data});
-                    
-                    this.userInfos = data;
-                    console.log('Dans le constructeur authservice :');
-                    console.log(this.userInfos);
                 }})
-            //
         }
-        this.authStatus$.subscribe({
-            next: authStatus => {
-                this.userInfos = authStatus.user;
-            }
-        })
     }
 
     AUTH_API = 'http://localhost:3000/api/auth';
     
-    public userInfos!: User | null;
-    public authStatusSource = new Subject<AuthStatus>();
+    public authStatusSource = new BehaviorSubject<AuthStatus>({isLogged: false, user: null});
     authStatus$ = this.authStatusSource.asObservable();
 
-    login(loginEmail: string, loginPassword: string): Observable<any> {
-        return this.http.post(this.AUTH_API + '/login', {
+    login(loginEmail: string, loginPassword: string): Observable<UserApiResponse> {
+        return this.http.post<UserApiResponse>(this.AUTH_API + '/login', {
             loginEmail,
             loginPassword
         });
     }
-
     
     public signOut(): void {
-        window.sessionStorage.clear();
+        window.localStorage.clear();
         this.authStatusSource.next({isLogged: false, user: null});
     }
-
 
     signup(signupLastName: string, signupFirstName: string, signupEmail: string, signupPassword: string): Observable<any> {
         return this.http.post(this.AUTH_API + '/signup', {
@@ -65,13 +53,6 @@ export class AuthService {
     }
 
     public saveUser(user: User): void {
-        this.userInfos = user;
-    }
-
-    public getUser(): User | null {
-        console.log('getUser demandé');
-        console.log('from authservice : ');
-        console.log(this.userInfos);
-        return this.userInfos;
+        this.authStatusSource.next({isLogged: true, user});
     }
 }

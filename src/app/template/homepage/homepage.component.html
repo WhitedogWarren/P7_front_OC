@@ -1,0 +1,5 @@
+<div *ngIf="user" class="homepage-viewer">
+    <h2>Accueil</h2>
+    <app-post-maker [userId]="user?.id"></app-post-maker>
+    <app-posts-list [postsData]="postsData" ></app-posts-list>
+</div>
