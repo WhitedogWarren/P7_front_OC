@@ -76,10 +76,12 @@ export class ProfileUpdaterComponent implements OnInit {
   }
 
   onSubmit(): void {
+    /*
     if(!this.updateProfileForm.valid) {
       this.notificationService.showError('Certains champs sont invalides !', 'Erreur :', {closeButton: true, enableHtml: true, positionClass: 'toast-bottom-center'});
       return;
     }
+    */
     const { postedLastName, postedFirstName, postedCurrentPassword, postedNewPassword1, postedNewPassword2  } = this.updateProfileForm.value;
     let myFormData = new FormData();
     if(this.user) {

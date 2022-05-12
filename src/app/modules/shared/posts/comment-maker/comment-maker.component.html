@@ -1,0 +1,22 @@
+<div>
+    <div class="comment-maker-heading">
+        <h3>Votre commentaire:</h3>
+        <div class="comment-maker-heading__avoid-button" (click)="avoidCommentCreation()">
+            <img src="../../assets/images/boutons/croix.png" alt="annuler la création de commentaire" title="annuler la création de commentaire" />Annuler
+        </div>
+    </div>
+    
+    <form class="comment-making-form" [formGroup]="commentMakerForm" (ngSubmit)="onSubmit()">
+        <textarea formControlName="postedContent" class="comment-input"></textarea>
+        <div class="comment-making-form__submit-button">
+            <button type="submit" >
+                <img src="../../assets/images/boutons/send_pink.png" alt="Envoyer" />
+                Envoyer
+            </button>
+        </div>
+    </form>
+    
+
+</div>
+
+

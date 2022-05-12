@@ -1,5 +1,5 @@
 //angular modules and services
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -36,6 +36,7 @@ export class SinglePostComponent implements OnInit {
   
   editMode:Boolean = false;
   moderateMode: Boolean = false;
+  commentCreationMode: Boolean = false;
   fileName = '';
   postedFile!: File;
   deleteImage: Boolean = false;
@@ -126,6 +127,14 @@ export class SinglePostComponent implements OnInit {
     this.moderateMode = false;
   }
 
+  createComment(): void {
+    this.commentCreationMode = true;
+  }
+
+  avoidCommentMaking(): void {
+    this.commentCreationMode = false;
+  }
+
   moderatePost(): void {
     this.postService.moderatePost(this.post.id.toString(), this.postmoderationForm.value.reasonForModeration).pipe(take(1)).subscribe({
       next: data => {
@@ -133,7 +142,6 @@ export class SinglePostComponent implements OnInit {
         if(data.newPost) {
           this.post = data.newPost;
         }
-        
         this.deactivateModerationForm();
       },
       error: err => {

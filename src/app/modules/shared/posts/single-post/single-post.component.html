@@ -7,7 +7,7 @@
                         <div class="post-label__avatar-container">
                             <img src="http://localhost:3000/images/avatars/{{post.User.avatarUrl}}" alt="avatar" />
                         </div>
-                        <div>{{post.User.lastname}} {{post.User.firstname}} a dit :</div>
+                        <h3>{{post.User.lastname}} {{post.User.firstname}} a dit :</h3>
                     </div>
                 </a>
                 <div *ngIf="user?.id===post.User.id" class="post-edit-icons">
@@ -22,9 +22,13 @@
         <p class="post-text-content"><img *ngIf="this.post.imageUrl" class="post-image" src="http://localhost:3000/images/postImage/{{post.imageUrl}}" alt="image du post"/>
             <span>{{post.content}}</span>
         </p>
+        <div *ngIf="commentCreationMode" class="comment-creation-box">
+            <app-comment-maker [post]="post" (closeCommentCreation)="avoidCommentMaking()"></app-comment-maker>
+        </div>
+        
         <div class="reaction-panel">
             <div class="reaction-box">
-                <div class="reaction-box__label">Réactions :</div>
+                <h3 class="reaction-box__label">Réactions :</h3>
                 <div class="reaction-box__buttons">
                     <div>
                         <img src="../../assets/images/boutons/like.png" alt="liker le post" title="J'aime" [ngClass]="{'cliquable': isCliquable()}" (click)="reactToPost('like')"/><br/>
@@ -43,6 +47,9 @@
                         <span *ngIf="angered.length > 0">{{angered.length}}</span>
                     </div>
                 </div>
+            </div>
+            <div *ngIf="!commentCreationMode" class="create-comment-button" (click)="createComment()">
+                <img src= "../../../../../assets/images/boutons/comment_pink.png" alt="commenter"> Commenter
             </div>
             <div class="report-box">
                 <span *ngIf="post.reported.length > 0">Ce post a été signalé {{post.reported.length}} fois</span>
@@ -96,6 +103,10 @@
                     <div class="submit-unmoderation" (click)="unmoderatePost()"><img src="../../assets/images/boutons/croix_pink.png" alt="annuler l'édition" />Enlever la modération</div>
                 </div>
             </div>
+        </div>
+        <div *ngIf="post.Comments.length > 0" class="comment-box">
+            <h3>Commentaires:</h3>
+            <app-comment *ngFor="let comment of post.Comments" [comment]="comment"></app-comment>
         </div>
     </div>
     <div class="post-editor" *ngIf="editMode">

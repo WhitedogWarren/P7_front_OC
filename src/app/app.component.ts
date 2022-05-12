@@ -11,7 +11,6 @@ import { HamburgerMenuService } from './_services/hamburger-menu.service';
 import { User } from './interfaces/user.interface';
 import { AuthStatus } from './interfaces/authStatus.interface';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -63,16 +62,18 @@ export class AppComponent {
       }
       this.hamburgerMenuService.hamburgerMenuCloserSource.next(true);
     })
-    this.router.events.subscribe((route: any) => {
-      if(route.url && route.url == '/auth/login') {
-        window.scroll({top: 0});
-        this.isShrinked = false;
+    this.router.events.subscribe({
+      next: (route: any) => {
+        if(route.url && route.url == '/auth/login') {
+          window.scroll({top: 0});
+          this.isShrinked = false;
+        }
       }
     })
   }
 
   logout(): void {
     this.authService.signOut();
-    window.location.reload();
+    this.router.navigate(['/auth/login']);
   }
 }   

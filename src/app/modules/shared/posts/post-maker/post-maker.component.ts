@@ -1,5 +1,5 @@
 //angular modules and services
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
@@ -19,8 +19,11 @@ import { Post } from 'src/app/interfaces/post.interface';
 })
 export class PostMakerComponent {
   @Input() userId?: string;
+  @ViewChild('fileUpload', {static: false})
+  InputVar!: ElementRef;
+  
   fileName = '';
-  postedFile!:File;
+  postedFile!:File | null;
   activePostmaking: boolean = false;
   postMakerForm = this.formBuilder.group({
     postedContent: ['']
@@ -33,8 +36,9 @@ export class PostMakerComponent {
       myFormData.append('postedContent', this.postMakerForm.value.postedContent);
       myFormData.append('userId', this.userId);
       if(this.fileName) {
-        console.log('file detecté');
-        myFormData.append('file', this.postedFile, `postImage_${this.fileName}`);
+        if(this.postedFile) {
+          myFormData.append('file', this.postedFile, `postImage_${this.fileName}`);
+        }
       }
       this.postService.createPost(myFormData).pipe(take(1)).subscribe({
         next: data => {
@@ -47,7 +51,7 @@ export class PostMakerComponent {
           })
           this.postService.postsDataSource.next(newData);
           this.postMakerForm.setValue({postedContent: ''});
-          this.activePostmaking = false;
+          this.avoidPostMaking();
           this.notificationService.showSuccess(data.message, '', {closeButton: true, positionClass: 'toast-bottom-center'});
         },
         error: err => {
@@ -61,14 +65,27 @@ export class PostMakerComponent {
     }
   }
 
+  activatePostmaking(): void {
+    this.activePostmaking = true;
+  }
+  avoidPostMaking(): void {
+    this.activePostmaking = false;
+    this.avoidImageAdding();
+  }
+
   onFileSelected(event: any): void {
     const file:File = event.target.files[0];
     if(file) {
       this.fileName = file.name;
       this.postedFile = file;
+      console.log(document.getElementsByClassName('posted-file-preview-box__image-viewer')[0]);
+      document.getElementsByClassName('posted-file-preview-box__image')[0].setAttribute('src', URL.createObjectURL(this.postedFile));
     }
   }
-  activatePostmaking(): void {
-    this.activePostmaking = true;
+  avoidImageAdding(): void {
+    document.getElementsByClassName('posted-file-preview-box__image')[0].setAttribute('src', '');
+    this.fileName = '';
+    this.postedFile = null;
+    this.InputVar.nativeElement.value = [];
   }
 }

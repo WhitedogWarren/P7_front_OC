@@ -1,10 +1,10 @@
 import { User } from "./user.interface";
-import { Comment } from "./comment.interface"
+import { Post } from "./post.interface"
 
-export interface Post {
+export interface Comment {
     id: number,
+    PostId: number,
     content: string,
-    imageUrl: string,
     moderated: boolean,
     reasonForModeration: string,
     corrected: boolean,
@@ -16,6 +16,11 @@ export interface Post {
     createdAt: Date,
     updatedAt: Date,
     UserId: number,
-    User: User,
-    Comments: Array<Comment>
+    User: {
+        id: number,
+        firstname: string,
+        lastname: string,
+        avatarUrl: string
+    },
+    Post: Post
 }

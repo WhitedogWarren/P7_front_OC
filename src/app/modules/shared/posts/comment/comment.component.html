@@ -1,0 +1,41 @@
+<div>
+    <!-- display mode -->
+    <div *ngIf="!editMode">
+        <div class="comment-heading">
+            <div class="comment-label">
+                <a routerLink="../users/{{comment.UserId}}" routerLinkActive="active">    
+                    <div class="comment-label__author-infos">
+                        <div class="comment-label__avatar-container">
+                            <img src="http://localhost:3000/images/avatars/{{comment.User.avatarUrl}}" alt="avatar">
+                        </div>
+                        <h4>{{comment.User.firstname}} {{comment.User.lastname}} :</h4>
+                    </div>
+                </a>
+            </div>
+            <div *ngIf="user?.id == comment.User.id.toString()" class="comment-heading__owner-buttons">
+                <div class="comment-heading__edit-button" *ngIf="!editMode" (click)="onAskEditMode()">
+                    <img src="../../assets/images/boutons/pen.png" alt="éditer le commentaire" title="éditer le commentaire">
+                </div>
+                <div class="comment-heading__avoid-button" (click)="onDeleteComment()">
+                    <img src="../../assets/images/boutons/trash.png" alt="supprimer le commentaire" title="supprimer le commentaire">
+                </div>
+            </div>
+        </div>
+        <div class="comment-content" >{{comment.content}}</div>
+    </div>
+    <!-- edition mode -->
+    <div *ngIf="editMode" class="edit-mode-block">
+        <form [formGroup]="commentEditorForm" (ngSubmit)="onEditComment()">
+            <div class="edit-mode-block__heading">
+                <div class="edit-mode-block__avoid-button" (click)="onAvoidEditMode()">
+                    <img src="../../assets/images/boutons/croix.png" alt="Annuler l'édition" />annuler
+                </div>
+            </div>
+            <textarea formControlName="postedContent" class="edit-mode-block__input"></textarea>
+            <div class="edit-mode-block__submit-button">
+                <button type="submit">
+                    <img src="../../assets/images/boutons/send_pink.png" alt="Envoyer" />Envoyer</button>
+            </div>
+        </form>
+    </div>
+</div>

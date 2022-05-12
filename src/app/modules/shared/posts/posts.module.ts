@@ -10,6 +10,8 @@ import { PostsListComponent } from './posts-list/posts-list.component';
 import { ReactionDialogComponent } from './reaction-dialog/reaction-dialog.component';
 import { SinglePostComponent } from './single-post/single-post.component';
 import { PostEditorComponent } from './post-editor/post-editor.component';
+import { CommentComponent } from './comment/comment.component';
+import { CommentMakerComponent } from './comment-maker/comment-maker.component';
 
 
 
@@ -19,7 +21,9 @@ import { PostEditorComponent } from './post-editor/post-editor.component';
     PostsListComponent,
     ReactionDialogComponent,
     SinglePostComponent,
-    PostEditorComponent
+    PostEditorComponent,
+    CommentComponent,
+    CommentMakerComponent
   ],
   imports: [
     CommonModule,

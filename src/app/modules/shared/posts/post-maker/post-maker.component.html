@@ -1,12 +1,45 @@
 <form [formGroup]="postMakerForm" (ngSubmit)="onSubmit()">
-    <p>Postez un nouveau contenu</p>
+    <div class="postmaking-header">
+        <div>
+            <p>Postez un nouveau contenu</p>
+        </div>
+        <div class="postmaking-action-buttons">
+            <div>
+                <div *ngIf="activePostmaking" class="file-upload" title="ajoutez une image">
+                    
+                    <div class="file-upload__button" (click)="fileUpload.click()"><img src="../../assets/images/boutons/picture.png"></div>
+                </div>
+            </div>
+            <div *ngIf="activePostmaking" class="avoid-button" title="annuler la rédaction" (click)="avoidPostMaking()">
+                <img src="../../assets/images/boutons/croix.png" alt="annuler la rédaction" />
+                <span>annuler</span>
+            </div>
+        </div>
+    </div>
     <div>
         <textarea formControlName="postedContent" (click)="activatePostmaking()" [ngClass]="{'inactive': activePostmaking==false, 'active': activePostmaking==true}"></textarea>
     </div>
+
+    <!-- hidden file input -->
     <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
-    <div class="file-upload">
-        {{fileName || ""}}
-        <div class="file-upload__button" (click)="fileUpload.click()"><img src="../../assets/images/boutons/picture.png"></div>
+    
+    <div class="postmaking-footer" [ngClass]="{'file-posted': fileName !== ''}">
+        <div class="posted-file-preview-box" [ngClass]="{'file-posted': fileName !== ''}">
+            <div>
+                <div class="posted-file-preview-box__image-viewer">
+                    <img class="posted-file-preview-box__image" alt="votre image">
+                </div>
+                {{fileName || ""}}
+            </div>
+            <div class="posted-file-preview-box__buttons-box">
+                <img class="image-editor__replace" src="../../assets/images/boutons/replace.png" alt="remplacer l'image" title="remplacer l'image" (click)="fileUpload.click()"/><br>
+                <img class="image-editor__delete" src="../../assets/images/boutons/trash.png" alt="supprimer l'image" title="supprimer l'image" (click)="avoidImageAdding()" />
+            </div>
+        </div>
+        <div class="postmaking-submit-button">
+            <button type="submit" >Poster</button>
+        </div>
+        <div class="posted-file-mirror" [ngClass]="{'file-posted': fileName !== ''}">
+        </div>
     </div>
-    <button type="submit" >Poster</button>
 </form>

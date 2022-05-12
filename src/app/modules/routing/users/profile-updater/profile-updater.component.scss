@@ -127,7 +127,30 @@ h2 {
     
 }
 
-.account-deleting-container {
-    text-align: center;
-    color: red;
+.account-deleting {
+    padding: 20px;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    &__button {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        border: 1px solid black;
+        border-radius: 5px;
+        width: fit-content;
+        
+        margin: auto;
+        padding-right: 6px;
+        background-color: #f7b3b3;
+        opacity: 0.6;
+        transition: all 400ms;
+        &:hover {
+            background-color: #fab3b3;
+            box-shadow: 4px 4px 10px #fab3b3;
+            opacity: 1;
+        }
+        & img {
+            margin-right: 4px;
+        }
+    }
 }

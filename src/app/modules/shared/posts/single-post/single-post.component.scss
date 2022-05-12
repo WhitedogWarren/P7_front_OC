@@ -26,13 +26,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    & div {
+        display: flex;
+        align-items: center;
+    }
     & .post-edit-icons {
-        margin: 0 10px;
         cursor: pointer;
-        opacity: 0.6;
-        transition: opacity 300ms;
-        &:hover{
-            opacity: 1
+        & img {
+            margin: 0 10px;
+            opacity: 0.6;
+            transition: opacity 300ms;
+            &:hover{
+                opacity: 1
+            }
         }
     }
     & .post-edit-icons {
@@ -51,6 +57,7 @@
         height:30px;
         border-radius: 15px;
         overflow: hidden;
+        margin-right: 10px;
         & img {
             border:none;
             width: 100%;
@@ -87,40 +94,71 @@
     display: block;
 }
 
+.comment-creation-box {
+    border-top: 1px solid grey;
+    padding: 10px;
+}
+
 .reaction-panel {
     border-top: 1px solid grey;
+    width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     //padding: 1rem;
     & .reaction-box {
         padding: 1rem;
-    }
-    & .reaction-box__buttons {
-        width:fit-content;
-        display: flex;
-        & div {
-            text-align: center;
-        }
-        & img {
-            border: 1px solid #edf3fc;
-            transition: all 300ms;
-            &:hover{
-                border: 1px solid grey;
-                border-radius: 4px;
+        flex: 1;
+        &__buttons {
+            width:fit-content;
+            display: flex;
+            & div {
+                text-align: center;
+            }
+            & img {
+                border: 1px solid #edf3fc;
+                transition: all 300ms;
+            }
+            & .cliquable {
+                cursor: pointer;
+                &:hover{
+                    border: 1px solid grey;
+                    border-radius: 4px;
+                }
             }
         }
-        & .cliquable {
-            cursor: pointer;
+    }
+    & .create-comment-button {
+        display: flex;
+        width: fit-content;
+        height: fit-content;
+        flex: 0 1;
+        align-self: flex-start;
+        margin-top: 15px;
+        cursor: pointer;
+        border: 1px solid grey;
+        border-radius: 5px;
+        width: fit-content;
+        padding: 4px;
+        background-color: #356cc4;
+        color: #f0b5b5;
+        transition: all 400ms;
+        &:hover {
+            background-color: #5a90e7;
+            box-shadow: 4px 4px 10px #5a90e7;
+        }
+        & img {
+            margin-right: 6px;
         }
     }
     & .report-box {
         padding: 1rem;
+        flex: 1;
         & span {
             margin-left: 1rem;
         }
         & .report-button {
             cursor: pointer;
-            //margin:auto;
             display: flex;
             align-items: center;
             border: 1px solid grey;
@@ -169,7 +207,6 @@
             border-top: 1px solid #dddddd;
             padding-top: 10px;
         }
-        
         & .report-box span {
             margin-left: 0;
         }
@@ -313,7 +350,10 @@
                 box-shadow: 4px 4px 10px #5a90e7;
             }
         }
-        
     }
+}
 
+.comment-box {
+    border-top: 1px solid grey;
+    padding: 10px;
 }
