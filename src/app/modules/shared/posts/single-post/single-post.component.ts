@@ -220,7 +220,7 @@ export class SinglePostComponent implements OnInit {
   }
 
   unreportPost(): void {
-    if(this.user) {
+    if(this.user && this.user.role) {
       this.postService.unreportPost(this.post.id.toString(), this.user.id, this.user.role).pipe(take(1)).subscribe({
         next: data => {
           console.log(data);

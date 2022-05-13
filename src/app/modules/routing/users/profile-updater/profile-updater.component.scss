@@ -109,10 +109,16 @@ h2 {
     text-align: center;
     & .bio-input {
         width: 80%;
+        height: 5rem;
+        overflow: hidden;
         resize: none;
         padding: 10px;
         border-radius: 10px;
-        
+        &:focus {
+            border-radius: 0;
+            overflow-y: scroll;
+            height: 8rem;
+        }
     }
 }
 
@@ -138,7 +144,7 @@ h2 {
         border: 1px solid black;
         border-radius: 5px;
         width: fit-content;
-        
+
         margin: auto;
         padding-right: 6px;
         background-color: #f7b3b3;

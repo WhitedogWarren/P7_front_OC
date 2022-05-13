@@ -1,12 +1,17 @@
+// angular modules and services
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { take } from 'rxjs';
-import { Comment } from 'src/app/interfaces/comment.interface';
-import { User } from 'src/app/interfaces/user.interface';
+
+//app services
 import { AuthService } from 'src/app/_services/auth.service';
 import { NotificationService } from 'src/app/_services/notification.service';
 import { CommentService } from '../comment.service';
 import { PostService } from '../post.service';
+
+//interfaces
+import { Comment } from 'src/app/interfaces/comment.interface';
+import { User } from 'src/app/interfaces/user.interface';
 
 @Component({
   selector: 'app-comment',
@@ -35,8 +40,7 @@ export class CommentComponent implements OnInit {
     })
   }
 
-  onDeleteComment(): void {
-    console.log('suppression demandée');
+  public onDeleteComment(): void {
     this.commentService.deleteComment(this.comment.id).pipe(take(1)).subscribe({
       next: data => {
         console.log(data);
@@ -64,15 +68,15 @@ export class CommentComponent implements OnInit {
     });
   }
 
-  onAskEditMode(): void {
+  public onAskEditMode(): void {
     this.editMode = true;
   }
 
-  onAvoidEditMode() :void {
+  public onAvoidEditMode() :void {
     this.editMode = false;
   }
 
-  onEditComment(): void {
+  public onEditComment(): void {
     this.commentService.updateComment(this.comment.id, { content: this.commentEditorForm.value.postedContent}).pipe(take(1)).subscribe({
       next: data => {
         console.log('data reçu :');

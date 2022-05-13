@@ -12,7 +12,7 @@
                     </div>
                 </a>
             </div>
-            <div *ngIf="user?.id == comment.User.id.toString()" class="comment-heading__owner-buttons">
+            <div *ngIf="user?.id == comment.UserId.toString()" class="comment-heading__owner-buttons">
                 <div class="comment-heading__edit-button" *ngIf="!editMode" (click)="onAskEditMode()">
                     <img src="../../assets/images/boutons/pen.png" alt="éditer le commentaire" title="éditer le commentaire">
                 </div>

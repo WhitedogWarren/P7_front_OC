@@ -34,7 +34,7 @@
 
     <div *ngIf="!loading" class="profile-viewer__post-list">
         <h3>Derniers posts :</h3>
-        <app-single-post *ngFor="let post of this.viewedUser.posts.reverse()" [post]="post" [user]="user"></app-single-post>
+        <app-single-post *ngFor="let post of this.viewedUser.posts?.reverse()" [post]="post" [user]="user"></app-single-post>
     </div>
 </div>
 

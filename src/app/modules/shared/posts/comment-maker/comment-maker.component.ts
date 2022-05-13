@@ -44,7 +44,7 @@ export class CommentMakerComponent implements OnInit {
           //////
           if(newComment && this.user) {
             newComment.User = {
-              id: parseInt(this.user.id),
+              id: this.user.id,
               firstname: this.user.firstname,
               lastname: this.user.lastname,
               avatarUrl: this.user.avatarUrl

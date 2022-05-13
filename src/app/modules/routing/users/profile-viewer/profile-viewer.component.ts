@@ -36,9 +36,12 @@ export class ProfileViewerComponent {
       this.userService.getUserInfo(route['id']).subscribe({
         next: viewedUser => {
           this.viewedUser = viewedUser;
-          for(let post of viewedUser.posts) {
-            post.User = this.viewedUser;
+          if(viewedUser.posts) {
+            for(let post of viewedUser.posts) {
+              post.User = this.viewedUser;
+            }
           }
+          
           this.changeRoleForm.patchValue({postedNewRole: this.viewedUser.role, editedUser: this.viewedUser.id});
           this.loading = false;
         }

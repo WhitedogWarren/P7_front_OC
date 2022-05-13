@@ -16,11 +16,6 @@ export interface Comment {
     createdAt: Date,
     updatedAt: Date,
     UserId: number,
-    User: {
-        id: number,
-        firstname: string,
-        lastname: string,
-        avatarUrl: string
-    },
+    User: User,
     Post: Post
 }

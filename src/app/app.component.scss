@@ -3,23 +3,10 @@
     max-height: 100vh;
 }
 
-/*
-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 99;
-    transition: 0.4s;
-    &.shrinked {
-        top: -200px;
-    }
-}
-*/
-
 main {
     background-color: #edf3fc;
-    padding-top: 20px;
-    margin-top: 260px;
+    padding-top: 280px;
+    //margin-top: 260px;
     
 }
 @media screen and (max-width: 992px) {
