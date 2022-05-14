@@ -33,6 +33,7 @@ export interface DialogData {
 export class SinglePostComponent implements OnInit {
   @Input() post!:Post;
   @Input() user!: User | null;
+  @Input() highlight?: string;
   
   editMode:Boolean = false;
   moderateMode: Boolean = false;
@@ -65,6 +66,10 @@ export class SinglePostComponent implements OnInit {
     this.angered = JSON.parse(this.post.angered);
     if(this.user && this.angered.includes(this.user.id))
       {this.currentReaction = 'anger';}
+
+    if(this.highlight) {
+      console.log(this.highlight);
+    }
   }
 
   private updateParents(newPost: Post) {
@@ -294,7 +299,7 @@ export class SinglePostComponent implements OnInit {
   }
 
   public isCliquable(): boolean {
-    if(this.user && this.user.id.toString() !== this.post.User.id.toString()) {
+    if(this.user && this.user.id.toString() !== this.post.UserId.toString()) {
       return true;
     }
     else {

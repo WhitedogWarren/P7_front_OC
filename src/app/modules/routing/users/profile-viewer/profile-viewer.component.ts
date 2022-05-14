@@ -35,6 +35,8 @@ export class ProfileViewerComponent {
     this.activatedRoute.params.subscribe((route) => {
       this.userService.getUserInfo(route['id']).subscribe({
         next: viewedUser => {
+          console.log(viewedUser);
+          console.log(this.user);
           this.viewedUser = viewedUser;
           if(viewedUser.posts) {
             for(let post of viewedUser.posts) {

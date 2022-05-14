@@ -106,7 +106,7 @@
         </div>
         <div *ngIf="post.Comments.length > 0" class="comment-box">
             <h3>Commentaires:</h3>
-            <app-comment *ngFor="let comment of post.Comments" [comment]="comment"></app-comment>
+            <app-comment [ngClass]="{'highlighted': comment.UserId.toString() == highlight}" *ngFor="let comment of post.Comments" [comment]="comment"></app-comment>
         </div>
     </div>
     <div class="post-editor" *ngIf="editMode">
