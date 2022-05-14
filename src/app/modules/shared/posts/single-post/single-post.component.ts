@@ -16,7 +16,7 @@ import { User } from 'src/app/interfaces/user.interface';
 
 //components
 import { ReactionDialogComponent } from '../reaction-dialog/reaction-dialog.component';
-
+import { DeletingDialogComponent } from 'src/app/template/deleting-dialog/deleting-dialog.component';
 
 export interface DialogData {
   postId: string;
@@ -80,22 +80,41 @@ export class SinglePostComponent implements OnInit {
     this.postService.postsDataSource.next(newData);
   }
   
-  showPost(): Boolean {
+  public showPost(): Boolean {
     if(this.user && this.user.role == 'user' && this.user.id !== this.post.User.id && this.post.moderated) {
       return false;
     }
     return true;
   }
 
-  editPost(): void {
+  public editPost(): void {
     this.editMode = true;
   }
   
-  cancelEdition(): void {
+  public cancelEdition(): void {
     this.editMode = false;
   }
 
-  deletePost(): void {
+  private openPostDeletingDialog(): void {
+    let DialogConfig = {
+      width: '250px',
+      data: {}
+    }
+    const dialogRef = this.dialog.open(DeletingDialogComponent, DialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        if(result.handler == 'confirm') {
+          this.deletePost();
+        }
+      }
+    })
+  }
+
+  public onDeletePost():void {
+    this.openPostDeletingDialog();
+  }
+
+  private deletePost(): void {
     this.postService.deletePost(this.post.id.toString()).pipe(take(1)).subscribe({
       next: data => {
         let newPostsData:Array<Post> = [];
@@ -120,22 +139,22 @@ export class SinglePostComponent implements OnInit {
     });
   }
 
-  activateModerationForm(): void {
+  public activateModerationForm(): void {
     this.moderateMode = true;
   }
-  deactivateModerationForm(): void {
+  public deactivateModerationForm(): void {
     this.moderateMode = false;
   }
 
-  createComment(): void {
+  public createComment(): void {
     this.commentCreationMode = true;
   }
 
-  avoidCommentMaking(): void {
+  public avoidCommentMaking(): void {
     this.commentCreationMode = false;
   }
 
-  moderatePost(): void {
+  public moderatePost(): void {
     this.postService.moderatePost(this.post.id.toString(), this.postmoderationForm.value.reasonForModeration).pipe(take(1)).subscribe({
       next: data => {
         this.notificationService.showSuccess(data.message, '', {closeButton: true, enableHtml: true, positionClass: 'toast-bottom-center'})
@@ -151,7 +170,7 @@ export class SinglePostComponent implements OnInit {
     })
   }
 
-  unmoderatePost(): void {
+  public unmoderatePost(): void {
     this.postService.unmoderatePost(this.post.id.toString()).pipe(take(1)).subscribe({
       next: data => {
         this.notificationService.showSuccess(data.message, '', {closeButton: true, enableHtml: true, positionClass: 'toast-bottom-center'})
@@ -168,7 +187,7 @@ export class SinglePostComponent implements OnInit {
     });
   }
 
-  sendCorrection(): void {
+  public sendCorrection(): void {
     this.postService.notifyCorrection(this.post.id.toString()).pipe(take(1)).subscribe({
       next:data => {
         this.notificationService.showSuccess(data.message, '', {closeButton: true, enableHtml: true, positionClass: 'toast-bottom-center'})
@@ -183,7 +202,7 @@ export class SinglePostComponent implements OnInit {
     })
   }
 
-  avoidCorrection(): void {
+  public avoidCorrection(): void {
     this.postService.avoidCorrection(this.post.id.toString()).pipe(take(1)).subscribe({
       next: data => {
         this.notificationService.showSuccess(data.message, '', {closeButton: true, enableHtml: true, positionClass: 'toast-bottom-center'})
@@ -198,7 +217,7 @@ export class SinglePostComponent implements OnInit {
     })
   }
 
-  reportPost(): void {
+  public reportPost(): void {
     if(this.user) {
       this.postService.reportPost(this.post.id.toString(), this.user.id).pipe(take(1)).subscribe({
         next: data => {
@@ -219,7 +238,7 @@ export class SinglePostComponent implements OnInit {
     }
   }
 
-  unreportPost(): void {
+  public unreportPost(): void {
     if(this.user && this.user.role) {
       this.postService.unreportPost(this.post.id.toString(), this.user.id, this.user.role).pipe(take(1)).subscribe({
         next: data => {
@@ -243,7 +262,7 @@ export class SinglePostComponent implements OnInit {
     }
   }
 
-  reactToPost(reaction: string): void {
+  public reactToPost(reaction: string): void {
     if(!this.user) {
       this.authService.signOut();
       this.router.navigate(['auth/login']);
@@ -274,7 +293,7 @@ export class SinglePostComponent implements OnInit {
     }
   }
 
-  isCliquable(): boolean {
+  public isCliquable(): boolean {
     if(this.user && this.user.id.toString() !== this.post.User.id.toString()) {
       return true;
     }
@@ -283,7 +302,7 @@ export class SinglePostComponent implements OnInit {
     }
   }
   
-  openReactionDialog(currentReaction: string, askedReaction: string): void {
+  private openReactionDialog(currentReaction: string, askedReaction: string): void {
     if(this.user) {
       let DialogConfig = {
         width: '250px',

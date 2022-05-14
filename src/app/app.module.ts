@@ -20,6 +20,7 @@ import { ModeratorDashboardComponent } from './template/moderator-dashboard/mode
 import { AccountDeletingDialogComponent } from './modules/routing/users/account-deleting-dialog/account-deleting-dialog.component';
 
 import { PostsModule } from './modules/shared/posts/posts.module';
+import { DeletingDialogComponent } from './template/deleting-dialog/deleting-dialog.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { PostsModule } from './modules/shared/posts/posts.module';
     HeaderComponent,
     HomepageComponent,
     ModeratorDashboardComponent,
-    AccountDeletingDialogComponent
+    AccountDeletingDialogComponent,
+    DeletingDialogComponent
   ],
   imports: [
     BrowserModule,

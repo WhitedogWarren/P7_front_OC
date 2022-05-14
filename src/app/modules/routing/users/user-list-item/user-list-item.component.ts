@@ -8,6 +8,6 @@ import { User } from '../../../../interfaces/user.interface';
 })
 export class UserListItemComponent {
   @Input() user!:User;
-  constructor() { }
-
+  constructor() {
+   }
 }

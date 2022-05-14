@@ -18,6 +18,8 @@ import { Post } from 'src/app/interfaces/post.interface';
 //components
 import { AccountDeletingDialogComponent } from '../account-deleting-dialog/account-deleting-dialog.component';
 
+//class
+import { CustomValidators } from './custom-validators';
 
 @Component({
   selector: 'app-profile-updater',
@@ -28,7 +30,7 @@ export class ProfileUpdaterComponent implements OnInit {
   user!: User | null;
   postsData!: Array<Post>
   postedFile!: File;
-  pattern: string = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$';
+  pattern: string = '^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\+\-\/\=\!@_&\*]{8,}$';
   updateProfileForm = this.formBuilder.group({
     postedLastName: ['', [Validators.required, Validators.minLength(2)]],
     postedFirstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -37,12 +39,17 @@ export class ProfileUpdaterComponent implements OnInit {
     postedCurrentPassword: ['', [Validators.pattern(this.pattern)]],
     postedNewPassword1: ['', [Validators.pattern(this.pattern)]],
     postedNewPassword2: ['', [Validators.pattern(this.pattern)]]
-  });
+  },
+  {
+    validator: CustomValidators.passwordMatchValidator
+  }
+  );
   errorMessage = '';
 
   constructor(private authService: AuthService, private userService: UserService, private postService: PostService, private notificationService: NotificationService, public dialog: MatDialog, private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    console.log(this.updateProfileForm);
     this.authService.authStatus$.subscribe({
       next: authStatus => {
         this.user = authStatus.user;
@@ -76,12 +83,10 @@ export class ProfileUpdaterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    /*
     if(!this.updateProfileForm.valid) {
       this.notificationService.showError('Certains champs sont invalides !', 'Erreur :', {closeButton: true, enableHtml: true, positionClass: 'toast-bottom-center'});
       return;
     }
-    */
     const { postedLastName, postedFirstName, postedCurrentPassword, postedNewPassword1, postedNewPassword2  } = this.updateProfileForm.value;
     let myFormData = new FormData();
     if(this.user) {
@@ -150,12 +155,12 @@ export class ProfileUpdaterComponent implements OnInit {
     });
   }
 
-  avatarHandler(event: any) {
+  public avatarHandler(event: any) {
     this.postedFile = event.target.files[0];
     document.getElementsByClassName('avatar-image')[0].setAttribute('src', URL.createObjectURL(this.postedFile));
   }
 
-  openAccountDeletingDialog(): void {
+  private openAccountDeletingDialog(): void {
     let DialogConfig = {
       width: '250px',
       data: {}
@@ -175,7 +180,7 @@ export class ProfileUpdaterComponent implements OnInit {
     })
   }
 
-  deleteAccount(): void {
+  public deleteAccount(): void {
     this.openAccountDeletingDialog();
   }
 }

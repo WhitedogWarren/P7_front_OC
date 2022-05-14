@@ -29,6 +29,7 @@ export class UsersDisplayComponent implements OnInit {
       }
     });
     this.userService.getUserList().pipe(take(1)).subscribe({
+      
       next: data => {
         this.userList = data;
         let adminList = [];
@@ -43,6 +44,8 @@ export class UsersDisplayComponent implements OnInit {
             userList.push(this.userList[i]);
         }
         this.adminList = adminList;
+        
+        console.log(this.adminList);
         this.modoList = modoList;
         this.userList = userList;
         this.loading = false;

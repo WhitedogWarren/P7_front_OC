@@ -1,5 +1,6 @@
 // angular modules and services
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder } from '@angular/forms';
 import { take } from 'rxjs';
 
@@ -13,6 +14,9 @@ import { PostService } from '../post.service';
 import { Comment } from 'src/app/interfaces/comment.interface';
 import { User } from 'src/app/interfaces/user.interface';
 
+//components
+import { DeletingDialogComponent } from 'src/app/template/deleting-dialog/deleting-dialog.component';
+
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
@@ -25,10 +29,9 @@ export class CommentComponent implements OnInit {
   commentEditorForm = this.formBuilder.group({
     postedContent: ['']
   })
-  constructor(private authService: AuthService , private commentService: CommentService, private postService: PostService, private formBuilder: FormBuilder, private notificationService: NotificationService) { }
+  constructor(private authService: AuthService , private commentService: CommentService, private postService: PostService, private formBuilder: FormBuilder, private notificationService: NotificationService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    //console.log(this.comment);
     // fill the textarea with actual value of this.comment.content
     this.commentEditorForm.setValue({'postedContent': this.comment.content});
     
@@ -40,7 +43,24 @@ export class CommentComponent implements OnInit {
     })
   }
 
-  public onDeleteComment(): void {
+  private openCommentDeletingDialog():void {
+    let DialogConfig = {
+      width: '250px',
+      data: {}
+    }
+    const dialogRef = this.dialog.open(DeletingDialogComponent, DialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result && result.handler == 'confirm') {
+        this.DeleteComment();
+      }
+    })
+  }
+
+  public onDeleteComment():void {
+    this.openCommentDeletingDialog();
+  }
+
+  private DeleteComment(): void {
     this.commentService.deleteComment(this.comment.id).pipe(take(1)).subscribe({
       next: data => {
         console.log(data);

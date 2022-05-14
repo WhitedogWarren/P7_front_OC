@@ -45,6 +45,30 @@
                     <input type="text" id="posted-newPassword2" formControlName="postedNewPassword2">
                 </div>
             </div>
+            <div class="new-password-errors" *ngIf="updateProfileForm.controls['postedCurrentPassword'].hasError('noActualPassword') || updateProfileForm.controls['postedNewPassword1'].hasError('noNewPassword') || updateProfileForm.controls['postedNewPassword2'].hasError('noNewPasswordConfirmation') || updateProfileForm.controls['postedNewPassword2'].hasError('pattern')">
+                Pour changer votre mot de passe, les trois champs sont requis:<br>
+                - <span class="new-password-errors__fieldname"
+                        [ngClass]="{'invalid': updateProfileForm.controls['postedCurrentPassword'].hasError('pattern') || updateProfileForm.controls['postedCurrentPassword'].hasError('noActualPassword') || updateProfileForm.controls['postedCurrentPassword'].value == ''}"
+                    >mot de passe actuel </span>
+                    <span class='invalid' *ngIf="updateProfileForm.controls['postedCurrentPassword'].hasError('pattern')">
+                        invalide
+                    </span><br>
+                - <span class="new-password-errors__fieldname"
+                        [ngClass]="{'invalid': updateProfileForm.controls['postedNewPassword1'].hasError('pattern') || updateProfileForm.controls['postedNewPassword1'].hasError('noNewPassword') || updateProfileForm.controls['postedNewPassword1'].value == ''}"
+                    >nouveau mot de passe</span>
+                    <span class='invalid' *ngIf="updateProfileForm.controls['postedNewPassword1'].hasError('pattern')">
+                        invalide
+                    </span><br>
+                - <span class="new-password-errors__fieldname"
+                        [ngClass]="{'invalid': updateProfileForm.controls['postedNewPassword2'].hasError('pattern') || updateProfileForm.controls['postedNewPassword2'].hasError('noNewPasswordConfirmation') || updateProfileForm.controls['postedNewPassword2'].value == ''}"
+                    >confirmation </span>
+                    <span class="invalid" *ngIf="updateProfileForm.controls['postedNewPassword2'].hasError('pattern')">
+                        invalide
+                    </span>
+            </div>
+            <div class="new-password-errors" *ngIf="updateProfileForm.controls['postedNewPassword2'].hasError('newPasswordMismatch')">
+                le nouveau mot de passe et sa confirmation sont différents.
+            </div>
         </fieldset>
         <fieldset class="avatar-fieldset">
             <label for="avatarInput">Avatar</label><br/>

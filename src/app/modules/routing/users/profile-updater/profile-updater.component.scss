@@ -49,6 +49,16 @@ h2 {
         display: flex;
         justify-content: space-between;
     }
+    & .new-password-errors {
+        margin: 10px 0;
+        padding: 6px 20px;
+        border: 1px solid #fab3b3;
+        border-radius: 8px;
+        box-shadow: -1px -1px 10px #fab3b3 inset;
+        & .invalid {
+            color: #880000
+        }
+    }
 }
 @media screen and (max-width: 535px) {
     .password-update {
