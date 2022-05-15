@@ -30,7 +30,7 @@
             <label for="signup-password">Mot de passe :</label>
         </div>
         <div class="inputs">
-            <input type="text" class="form-control" formControlName="signupPassword" id="signup-password">
+            <input type="password" class="form-control" formControlName="signupPassword" id="signup-password">
         </div>
     </div>
     <div class="password-helper" *ngIf="signupForm.controls['signupPassword'].errors?.['pattern']">

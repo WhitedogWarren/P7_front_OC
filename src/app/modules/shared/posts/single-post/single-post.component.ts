@@ -66,10 +66,6 @@ export class SinglePostComponent implements OnInit {
     this.angered = JSON.parse(this.post.angered);
     if(this.user && this.angered.includes(this.user.id))
       {this.currentReaction = 'anger';}
-
-    if(this.highlight) {
-      console.log(this.highlight);
-    }
   }
 
   private updateParents(newPost: Post) {
@@ -103,6 +99,7 @@ export class SinglePostComponent implements OnInit {
   private openPostDeletingDialog(): void {
     let DialogConfig = {
       width: '250px',
+      panelClass: 'custom-dialog-container',
       data: {}
     }
     const dialogRef = this.dialog.open(DeletingDialogComponent, DialogConfig);
@@ -223,12 +220,17 @@ export class SinglePostComponent implements OnInit {
   }
 
   public reportPost(): void {
+    console.log('this.post');
+    console.log(this.post);
     if(this.user) {
       this.postService.reportPost(this.post.id.toString(), this.user.id).pipe(take(1)).subscribe({
         next: data => {
           this.notificationService.showSuccess(data.message, '', {closeButton: true, enableHtml: true, positionClass: 'toast-bottom-center'})
           if(data.newPost) {
+            console.log('NewPost:');
+            console.log(data.newPost);
             this.post = data.newPost;
+            this.updateParents(data.newPost);
           }
         },
         error: (err) => {
@@ -251,6 +253,7 @@ export class SinglePostComponent implements OnInit {
           this.notificationService.showSuccess(data.message, '', {closeButton: true, enableHtml: true, positionClass: 'toast-bottom-center'})
           if(data.newPost) {
             this.post = data.newPost;
+            console.log(data.newPost);
             this.updateParents(data.newPost);
           }
           

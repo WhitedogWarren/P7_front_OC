@@ -44,8 +44,6 @@ export class UsersDisplayComponent implements OnInit {
             userList.push(this.userList[i]);
         }
         this.adminList = adminList;
-        
-        console.log(this.adminList);
         this.modoList = modoList;
         this.userList = userList;
         this.loading = false;

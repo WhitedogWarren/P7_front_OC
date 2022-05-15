@@ -163,6 +163,7 @@ export class ProfileUpdaterComponent implements OnInit {
   private openAccountDeletingDialog(): void {
     let DialogConfig = {
       width: '250px',
+      panelClass: 'custom-dialog-container',
       data: {}
     }
     const dialogRef = this.dialog.open(AccountDeletingDialogComponent, DialogConfig);

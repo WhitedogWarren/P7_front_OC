@@ -148,6 +148,8 @@
     & .report-box {
         padding: 1rem;
         flex: 1;
+        align-self: flex-start;
+        text-align: right;
         & span {
             margin-left: 1rem;
         }
@@ -158,7 +160,7 @@
             border: 1px solid grey;
             border-radius: 5px;
             width: fit-content;
-            margin: 4px 1rem;
+            margin: 4px 1rem auto auto;
             padding: 2px 4px;
             background-color: #fcdddd;
             opacity: 0.4;
@@ -179,7 +181,7 @@
             border: 1px solid grey;
             border-radius: 5px;
             width: fit-content;
-            margin: 4px 1rem;
+            margin: 4px 1rem auto auto;
             padding-right: 6px;
             background-color: #356cc4;
             color: #f0b5b5;
@@ -191,6 +193,9 @@
             & img {
                 margin-right: 10px;
             }
+        }
+        & .report-info {
+            padding-right: 1rem;
         }
     }
 }
@@ -350,5 +355,4 @@
 .comment-box {
     border-top: 1px solid grey;
     padding: 10px;
-    
 }

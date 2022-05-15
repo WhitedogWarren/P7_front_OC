@@ -1,6 +1,5 @@
 <div *ngIf="showPost()">
     <div *ngIf="!this.editMode" class="post-container" [ngClass]="{'moderated-post': post.moderated, 'normal-post': !post.moderated}">
-        
             <div class="post-heading">
                 <a routerLink="../users/{{post.User.id}}" routerLinkActive="active">
                     <div class="post-label">
@@ -25,7 +24,6 @@
         <div *ngIf="commentCreationMode" class="comment-creation-box">
             <app-comment-maker [post]="post" (closeCommentCreation)="avoidCommentMaking()"></app-comment-maker>
         </div>
-        
         <div class="reaction-panel">
             <div class="reaction-box">
                 <h3 class="reaction-box__label">Réactions :</h3>
@@ -52,7 +50,7 @@
                 <img src= "../../../../../assets/images/boutons/comment_pink.png" alt="commenter"> Commenter
             </div>
             <div class="report-box">
-                <span *ngIf="post.reported.length > 0">Ce post a été signalé {{post.reported.length}} fois</span>
+                <span class="report-info" *ngIf="post.reported.length > 0">Ce post a été signalé {{post.reported.length}} fois</span>
                 <div *ngIf="user && !post.reported.includes(user.id) && post.User.role == 'user' && user.role == 'user' && post.User.id !== user.id" class="report-button" title="Signaler le post" (click)="reportPost()">
                     <img src="../../assets/images/boutons/warning.png" alt="Signaler le post" />
                     Signaler
@@ -60,7 +58,7 @@
                 <div *ngIf="user && (post.reported.includes(user.id) || user?.role !== 'user') && post.reported.length > 0">
                     <div class="unreport-button" title="annuler le signalement" (click)="unreportPost()">
                         <img src="../../assets/images/boutons/croix.png" alt="annuler le signalement" />
-                        Annuler le signalement
+                        Annuler votre signalement
                     </div>
                 </div>
             </div>

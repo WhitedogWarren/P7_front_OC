@@ -26,7 +26,7 @@
                     <label for="posted-currentPassword">Mot de passe actuel</label>
                 </div>
                 <div class="inputs">
-                    <input type="text" id="posted-currentPassword" formControlName="postedCurrentPassword">
+                    <input type="password" id="posted-currentPassword" formControlName="postedCurrentPassword">
                 </div>
             </div>
             <div class="password-update__new-password1">
@@ -34,7 +34,7 @@
                     <label for="posted-newPassword1">Entrez le nouveau mot de passe</label>
                 </div>
                 <div class="inputs">
-                    <input type="text" id="posted-newPassword1" formControlName="postedNewPassword1">
+                    <input type="password" id="posted-newPassword1" formControlName="postedNewPassword1">
                 </div>
             </div>
             <div class="password-update__new-password2">
@@ -42,7 +42,7 @@
                     <label for="posted-newPassword2">Confirmez le nouveau mot de passe</label>
                 </div>
                 <div class="inputs">
-                    <input type="text" id="posted-newPassword2" formControlName="postedNewPassword2">
+                    <input type="password" id="posted-newPassword2" formControlName="postedNewPassword2">
                 </div>
             </div>
             <div class="new-password-errors" *ngIf="updateProfileForm.controls['postedCurrentPassword'].hasError('noActualPassword') || updateProfileForm.controls['postedNewPassword1'].hasError('noNewPassword') || updateProfileForm.controls['postedNewPassword2'].hasError('noNewPasswordConfirmation') || updateProfileForm.controls['postedNewPassword2'].hasError('pattern')">

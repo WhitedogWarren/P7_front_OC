@@ -46,6 +46,7 @@ export class CommentComponent implements OnInit {
   private openCommentDeletingDialog():void {
     let DialogConfig = {
       width: '250px',
+      panelClass: 'custom-dialog-container',
       data: {}
     }
     const dialogRef = this.dialog.open(DeletingDialogComponent, DialogConfig);
