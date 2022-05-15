@@ -52,15 +52,17 @@ export class PostEditorComponent implements OnInit {
       this.postService.editPost(this.user.id.toString(), myFormData).pipe(take(1)).subscribe({
         next: (data) => {
           let newPostsData: Array<Post> = [];
+          /*
           if(data.newPost) {
             this.post = data.newPost;
           }
+          */
           this.notificationService.showSuccess(data.message, '', {closeButton: true, enableHtml: true, positionClass: 'toast-bottom-center'});
           // Mettre à jour le postData du parent
-          let subscription = this.postService.postsData$.subscribe({
+          this.postService.postsData$.pipe(take(1)).subscribe({
             next: postsData => {
               for(let post of postsData) {
-                if(data.newPost && post.id == this.post.id) {
+                if(data.newPost && post.id == data.newPost.id) {
                   newPostsData.push(data.newPost);
                 }
                 else {
@@ -69,7 +71,6 @@ export class PostEditorComponent implements OnInit {
               }
             }
           })
-          subscription.unsubscribe();
           this.postService.postsDataSource.next(newPostsData);
           //fermer l'éditeur
           this.cancelEdition();

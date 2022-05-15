@@ -44,7 +44,18 @@ export class HomepageComponent implements OnInit {
   getPostsShunk(): void {
     this.postService.getPostShunk(0).pipe(take(1)).subscribe({
       next:data => {
-        this.postService.postsDataSource.next(data);
+        this.postService.postsData$.pipe(take(1)).subscribe({
+          next: postData => {
+            if(postData.length > 0) {
+              postData.concat(data);
+              this.postService.postsDataSource.next(postData);
+            }
+            else {
+              this.postService.postsDataSource.next(data);
+            }
+            
+          }
+        })
       },
       error: (err) => {
         console.log(err.error.message);

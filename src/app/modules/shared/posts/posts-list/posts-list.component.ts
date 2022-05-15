@@ -33,11 +33,17 @@ export class PostsListComponent implements OnInit {
 
   onScrollDown(event: any): void {
     console.log('scrolled down');
-
+    let newData: Array<Post> = [];
     this.postService.getPostShunk(this.numberOfPosts).pipe(take(1)).subscribe({
       next: data => {
-        this.postsData = this.postsData.concat(data);
-        this.numberOfPosts += data.length;
+        this.postService.postsData$.pipe(take(1)).subscribe({
+          next: postData => {
+            newData = postData.concat(data);
+          }
+        })
+        this.postService.postsDataSource.next(newData);
+        this.numberOfPosts = newData.length;
+        this.postsData = newData;
       },
       error: (err) => {
         if(err.error.message == 'jwt expired') {

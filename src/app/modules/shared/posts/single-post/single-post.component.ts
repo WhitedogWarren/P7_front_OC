@@ -70,14 +70,13 @@ export class SinglePostComponent implements OnInit {
 
   private updateParents(newPost: Post) {
     let newData: Array<Post> = [];
-    let subscription = this.postService.postsData$.subscribe({
+    this.postService.postsData$.pipe(take(1)).subscribe({
       next: data => {
         for(let post of data) {
           post.id !== newPost.id ? newData.push(post) : newData.push(newPost);
         }
       }
     })
-    subscription.unsubscribe();
     this.postService.postsDataSource.next(newData);
   }
   
