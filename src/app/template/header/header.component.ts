@@ -9,7 +9,6 @@ import { HamburgerMenuService } from 'src/app/_services/hamburger-menu.service';
 //interfaces
 import { AuthStatus } from '../../interfaces/authStatus.interface';
 
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -33,19 +32,8 @@ export class HeaderComponent {
 
   public displayHamburgerMenu(): void {
     this.hamburgerDisplayed = true;
-    console.log('ouverture demandée');
   }
   
-  /*
-  public hideHamburgerMenu(event: Event): void {
-    let targetElement = event.target as Element;
-    console.log(targetElement);
-    console.log(targetElement.classList.contains('hamburger-links'));
-    this.hamburgerDisplayed = false;
-    console.log('fermeture demandée');
-  }
-  */
-
   public logout(): void {
     this.authService.signOut();
     this.router.navigate(['/login']);
